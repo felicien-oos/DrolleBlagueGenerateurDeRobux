@@ -3,268 +3,272 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Générateur Ultra Cool de Robux</title>
+<title>Générateur Robux Cool</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(120deg, #1e3c72, #2a5298, #1e3c72);
-    color: #fff;
-    overflow-x: hidden;
+  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+  body {
+    margin:0; padding:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    overflow: hidden;
   }
-  #app {
-    max-width: 450px;
-    margin: 40px auto;
-    background: rgba(0,0,0,0.35);
-    border-radius: 20px;
-    padding: 30px 40px;
-    box-shadow: 0 0 25px rgba(255 255 255 / 0.2);
+  #container {
+    background: rgba(0,0,0,0.65);
+    padding: 40px 50px;
+    border-radius: 25px;
+    width: 360px;
+    box-shadow: 0 0 25px #00d2ff;
+    text-align: center;
     position: relative;
   }
   h1 {
-    font-weight: 700;
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    user-select: none;
-  }
-  #logo {
-    width: 80px;
-    margin: 0 auto 20px;
-    display: block;
-    filter: drop-shadow(0 0 5px #0ff);
-    animation: pulseLogo 2s infinite ease-in-out;
-  }
-  @keyframes pulseLogo {
-    0%, 100% {transform: scale(1);}
-    50% {transform: scale(1.1);}
-  }
-  .emoji {
-    font-size: 3.5rem;
-    display: block;
-    text-align: center;
     margin-bottom: 15px;
-    animation: bounce 2s infinite;
+    font-size: 2.5rem;
   }
-  @keyframes bounce {
-    0%, 100% {transform: translateY(0);}
-    50% {transform: translateY(-15px);}
-  }
-  label {
-    font-size: 1.2rem;
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-  }
-  input[type=text], input[type=number] {
-    width: 100%;
-    padding: 14px 20px;
-    font-size: 1.2rem;
+  input[type="text"], input[type="number"] {
+    width: 85%;
+    padding: 12px 15px;
+    margin-top: 10px;
     border-radius: 12px;
     border: none;
+    font-size: 1.3rem;
+    text-align: center;
     outline: none;
-    margin-bottom: 25px;
-    box-sizing: border-box;
-    transition: box-shadow 0.3s ease;
   }
-  input[type=text]:focus, input[type=number]:focus {
-    box-shadow: 0 0 15px #0ff;
-    background-color: rgba(255 255 255 / 0.1);
-    color: #fff;
+  input[type="number"]::-webkit-inner-spin-button, 
+  input[type="number"]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
   }
   button {
-    width: 100%;
-    background: #00fff7;
+    margin-top: 25px;
+    background: #00d2ff;
     border: none;
-    padding: 16px;
+    border-radius: 25px;
+    padding: 15px 40px;
     font-size: 1.3rem;
     font-weight: 700;
-    border-radius: 15px;
+    color: #004e6d;
     cursor: pointer;
-    color: #003333;
-    box-shadow: 0 6px 12px #00fff7aa;
-    transition: background 0.3s ease, transform 0.2s ease;
-    user-select: none;
+    transition: 0.3s ease;
+    user-select:none;
   }
-  button:hover {
-    background: #00d6c0;
-    transform: scale(1.05);
+  button:hover:not(:disabled) {
+    background: #00a9d6;
+    color: white;
   }
-  button:active {
-    transform: scale(0.95);
+  button:disabled {
+    background: #004e6d;
+    color: #66c9ff;
+    cursor: not-allowed;
   }
-  .step {
+  .emoji {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: bounce 1.2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  .page {
     display: none;
-    animation: fadeIn 0.7s ease forwards;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    user-select:none;
   }
-  .step.active {
+  .page.active {
     display: block;
+    opacity: 1;
   }
-  @keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-  #confetti-canvas {
-    pointer-events: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: 9999;
-  }
-  .robux-number {
+  #robux-amount {
     font-size: 5rem;
     font-weight: 900;
-    text-align: center;
-    margin: 30px 0 20px;
-    color: #00fff7;
-    text-shadow: 0 0 15px #00fff7aa;
-    user-select: none;
+    color: #00ffff;
+    text-shadow: 0 0 15px #00ffff;
+    margin: 20px 0;
+  }
+  #robux-container {
+    position: relative;
+    height: 140px;
+    overflow: visible;
   }
   .robux-icon {
-    display: inline-block;
-    width: 48px;
-    height: 48px;
-    vertical-align: middle;
-    margin-left: 10px;
-    animation: popIn 0.6s ease forwards;
+    position: absolute;
+    font-size: 2.8rem;
+    color: #00ffff;
+    animation: floatUp 3s ease-out forwards;
+    user-select:none;
   }
-  @keyframes popIn {
-    from {transform: scale(0);}
-    to {transform: scale(1);}
+  @keyframes floatUp {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-150px) scale(1.5);
+    }
   }
-  #warning {
-    background: #ff4444dd;
-    color: #fff;
-    font-weight: 700;
-    padding: 15px;
-    border-radius: 14px;
-    text-align: center;
-    margin-top: 35px;
+  .warning-text {
+    font-family: 'Courier Prime', monospace;
     font-size: 1.1rem;
-    box-shadow: 0 0 15px #ff4444cc;
-    user-select: none;
+    color: #ff5555;
+    margin-top: 40px;
+    border: 2px solid #ff5555;
+    border-radius: 12px;
+    padding: 15px;
+    background: rgba(255, 85, 85, 0.15);
+    user-select:none;
   }
-  #warning p {
-    margin: 6px 0;
-  }
-  .emoji-small {
-    font-size: 1.5rem;
-    margin-right: 8px;
+  #footer-warning {
+    margin-top: 25px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.9rem;
+    color: #ffcc00;
+    background: rgba(0,0,0,0.4);
+    padding: 10px;
+    border-radius: 10px;
+    user-select:none;
   }
 </style>
 </head>
 <body>
-  <canvas id="confetti-canvas"></canvas>
-  <div id="app" role="main" aria-live="polite">
-    <img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Roblox_Logo_2015.svg/1200px-Roblox_Logo_2015.svg.png" alt="Logo Robux" />
-    
-    <!-- Step 1: Pseudo -->
-    <section class="step active" id="step-pseudo">
-      <div class="emoji" aria-hidden="true">😄🤖</div>
-      <label for="inputPseudo">Mettez votre pseudo :</label>
-      <input type="text" id="inputPseudo" placeholder="ex: roi_des_robots" autocomplete="off" />
-      <button id="btnNextPseudo" aria-label="Passer à l’étape suivante">Suivant ➡️</button>
-    </section>
 
-    <!-- Step 2: Choix du nombre de Robux -->
-    <section class="step" id="step-amount">
-      <div class="emoji" aria-hidden="true">💰✨</div>
-      <label for="inputAmount">Combien de Robux voulez-vous ?</label>
-      <input type="number" id="inputAmount" min="1" max="10000" placeholder="100" autocomplete="off" />
-      <button id="btnNextAmount" aria-label="Passer à l’étape suivante">Suivant ➡️</button>
-    </section>
+<div id="container">
 
-    <!-- Step 3: Vérification humaine -->
-    <section class="step" id="step-human-check">
-      <div class="emoji" aria-hidden="true">🕵️‍♂️🧠</div>
-      <h2 style="text-align:center; font-weight:700; font-size:1.8rem;">Êtes-vous un humain ?</h2>
-      <div style="text-align:center; margin: 20px 0;">
-        <button id="btnHumanYes" aria-label="Confirmer que je suis un humain">Oui, je suis humain ✔️</button>
-      </div>
-    </section>
-
-    <!-- Step 4: Génération Robux -->
-    <section class="step" id="step-result">
-      <div class="emoji" aria-hidden="true" style="font-size:4rem;">🎉💸</div>
-      <div class="robux-number" id="robuxDisplay">100 <img class="robux-icon" src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Icône Robux" /></div>
-      <p style="text-align:center; font-weight:600; font-size:1.2rem; margin-bottom: 30px;">
-        Vos <span id="finalAmount">100</span> Robux ont été enregistrés avec succès ! 🎊
-      </p>
-      <button id="btnNextFinal" aria-label="Passer à l’avertissement final">Suivant ➡️</button>
-    </section>
-
-    <!-- Step 5: Avertissement final -->
-    <section class="step" id="step-warning">
-      <div class="emoji" aria-hidden="true" style="font-size: 3rem;">⚠️❗</div>
-      <h2 style="text-align:center; font-weight:700; margin-bottom: 12px;">Important - Lisez bien 👇</h2>
-      <div id="warning" role="alert" tabindex="0" aria-live="assertive">
-        <p><span class="emoji-small" aria-hidden="true">😄</span>Ce site est juste une blague pour faire rigoler votre pote.</p>
-        <p>Il faut acheter des Robux uniquement via la société officielle.</p>
-        <p>Les générateurs de Robux sont des arnaques ou des virus.</p>
-        <p>Seul Microsoft Rewards peut offrir des Robux gratuits.</p>
-        <p>Ne faites pas confiance aux faux générateurs ou aux promesses sur YouTube.</p>
-      </div>
-    </section>
+  <!-- Page 1 -->
+  <div class="page active" id="page1">
+    <div class="emoji">😄</div>
+    <h1>Mets ton pseudo</h1>
+    <input type="text" id="pseudo-input" placeholder="Ex: roi_des_robux" maxlength="15" autocomplete="off" />
+    <button id="next1" disabled>Suivant</button>
   </div>
 
+  <!-- Page 2 -->
+  <div class="page" id="page2">
+    <div class="emoji">💰</div>
+    <h1>Combien de Robux veux-tu ?</h1>
+    <input type="number" id="robux-input" placeholder="Ex: 100" min="1" max="10000" />
+    <button id="next2" disabled>Suivant</button>
+  </div>
+
+  <!-- Page 3 -->
+  <div class="page" id="page3">
+    <div class="emoji">🧠</div>
+    <h1>Es-tu un humain ?</h1>
+    <button id="human-yes">Oui, je suis humain</button>
+  </div>
+
+  <!-- Page 4 -->
+  <div class="page" id="page4">
+    <h1>Ton nombre de <span id="robux-final-amount"></span> Robux est prêt !</h1>
+    <div id="robux-container"></div>
+    <button id="next4">Suivant</button>
+    <div id="footer-warning">
+      Clique sur « Suivant » pour finaliser.<br><br>
+      <strong>Attention :</strong><br>
+      Ce site est juste une blague pour faire rigoler ton pote 😄.<br>
+      Il faut acheter des Robux uniquement via la société officielle.<br>
+      Les générateurs de Robux sont des arnaques ou des virus.<br>
+      Seul Microsoft Rewards peut offrir des Robux gratuits.<br>
+      Ne fais pas confiance aux faux générateurs ou aux promesses sur YouTube.
+    </div>
+  </div>
+
+  <!-- Page 5 -->
+  <div class="page" id="page5">
+    <h1 style="color:#ff4444; font-family: 'Courier Prime', monospace; font-size:2rem;">⚠️ Avertissement Final ⚠️</h1>
+    <p style="font-family: 'Courier Prime', monospace; font-size:1.3rem; margin-top: 20px; line-height:1.4;">
+      Ce site est juste une blague pour faire rigoler ton pote 😄.<br><br>
+      Il faut acheter des Robux uniquement via la société officielle.<br>
+      Les générateurs de Robux sont des arnaques ou des virus.<br>
+      Seul Microsoft Rewards peut offrir des Robux gratuits.<br>
+      Ne fais pas confiance aux faux générateurs ou aux promesses sur YouTube.
+    </p>
+  </div>
+
+</div>
+
 <script>
-// Gestion des étapes
-const steps = [...document.querySelectorAll('.step')];
-let currentStep = 0;
+  // Gestion des pages
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => {
+      if (p.id === id) {
+        p.classList.add('active');
+      } else {
+        p.classList.remove('active');
+      }
+    });
+  }
 
-const inputPseudo = document.getElementById('inputPseudo');
-const btnNextPseudo = document.getElementById('btnNextPseudo');
-const inputAmount = document.getElementById('inputAmount');
-const btnNextAmount = document.getElementById('btnNextAmount');
-const btnHumanYes = document.getElementById('btnHumanYes');
-const stepResult = document.getElementById('step-result');
-const robuxDisplay = document.getElementById('robuxDisplay');
-const finalAmount = document.getElementById('finalAmount');
-const btnNextFinal = document.getElementById('btnNextFinal');
-
-function showStep(index) {
-  steps.forEach((step, i) => {
-    step.classList.toggle('active', i === index);
+  // Page 1 : pseudo
+  const pseudoInput = document.getElementById('pseudo-input');
+  const next1 = document.getElementById('next1');
+  pseudoInput.addEventListener('input', () => {
+    next1.disabled = pseudoInput.value.trim().length < 3;
   });
-  currentStep = index;
-}
-btnNextPseudo.addEventListener('click', () => {
-  if(inputPseudo.value.trim().length < 3) {
-    alert('Ton pseudo doit faire au moins 3 caractères !');
-    return;
-  }
-  showStep(1);
-  inputAmount.focus();
-});
-btnNextAmount.addEventListener('click', () => {
-  const amount = Number(inputAmount.value);
-  if(!amount || amount < 1 || amount > 10000) {
-    alert('Choisis un nombre de Robux entre 1 et 10 000.');
-    return;
-  }
-  showStep(2);
-});
-btnHumanYes.addEventListener('click', () => {
-  const amount = Number(inputAmount.value);
-  finalAmount.textContent = amount;
-  robuxDisplay.innerHTML = `${amount} <img class="robux-icon" src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Icône Robux" />`;
-  showStep(3);
-  launchConfetti(amount);
-});
-btnNextFinal.addEventListener('click', () => {
-  showStep(4);
-});
+  next1.addEventListener('click', () => {
+    showPage('page2');
+    robuxInput.value = '';
+    next2.disabled = true;
+  });
 
-// Confettis
-const confettiCanvas = document.getElementById('confetti-canvas');
-const ctx = confettiCanvas.getContext('2d');
-let confettiElements = [];
+  // Page 2 : nombre de robux
+  const robuxInput = document.getElementById('robux-input');
+  const next2 = document.getElementById('next2');
+  robuxInput.addEventListener('input', () => {
+    let val = parseInt(robuxInput.value);
+    if (val >= 1 && val <= 10000) {
+      next2.disabled = false;
+    } else {
+      next2.disabled = true;
+    }
+  });
+  next2.addEventListener('click', () => {
+    showPage('page3');
+  });
 
-function resizeCanvas() {
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize
+  // Page 3 : vérification humaine
+  const humanYes = document.getElementById('human-yes');
+  humanYes.addEventListener('click', () => {
+    showPage('page4');
+    startRobuxAnimation();
+  });
+
+  // Page 4 : animation Robux et finalisation
+  const robuxFinalAmount = document.getElementById('robux-final-amount');
+  const robuxContainer = document.getElementById('robux-container');
+  const next4 = document.getElementById('next4');
+
+  function startRobuxAnimation() {
+    robuxFinalAmount.textContent = robuxInput.value;
+    robuxContainer.innerHTML = ''; // reset
+
+    const count = Math.min(50, parseInt(robuxInput.value)); // max 50 icônes pour pas trop charger
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement('span');
+      span.textContent = '🪙';  // pièce emoji (remplace par 💰 si tu préfères)
+      span.className = 'robux-icon';
+      // Position aléatoire horizontale
+      span.style.left = (Math.random() * 320) + 'px';
+      // Delai d'animation différent
+      span.style.animationDelay = (i * 0.06) + 's';
+      robuxContainer.appendChild(span);
+    }
+  }
+
+  next4.addEventListener('click', () => {
+    showPage('page5');
+  });
+</script>
+
+</body>
+</html>
 
