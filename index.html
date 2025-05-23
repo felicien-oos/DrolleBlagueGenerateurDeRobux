@@ -1,149 +1,269 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Générateur de Robux - FAUX SITE</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #d0ecff;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-
-    .page {
-      display: none;
-      padding: 40px 20px;
-    }
-
-    .active {
-      display: block;
-    }
-
-    .emoji {
-      font-size: 50px;
-    }
-
-    h2 {
-      font-size: 32px;
-      color: #005b9f;
-      margin-bottom: 20px;
-    }
-
-    input, select {
-      padding: 15px;
-      font-size: 20px;
-      width: 60%;
-      max-width: 400px;
-      margin-top: 15px;
-      border-radius: 8px;
-      border: 2px solid #007acc;
-    }
-
-    button {
-      padding: 15px 30px;
-      font-size: 20px;
-      margin-top: 30px;
-      border-radius: 8px;
-      border: none;
-      background-color: #007acc;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #005b9f;
-    }
-
-    .robux-icon {
-      font-size: 50px;
-      color: green;
-      margin: 10px;
-      animation: jump 0.6s infinite alternate;
-    }
-
-    @keyframes jump {
-      to { transform: translateY(-10px); }
-    }
-
-    .warning {
-      color: red;
-      font-size: 20px;
-      margin-top: 40px;
-    }
-
-    img.logo {
-      width: 150px;
-      margin-top: 30px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Générateur Ultra Cool de Robux</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(120deg, #1e3c72, #2a5298, #1e3c72);
+    color: #fff;
+    overflow-x: hidden;
+  }
+  #app {
+    max-width: 450px;
+    margin: 40px auto;
+    background: rgba(0,0,0,0.35);
+    border-radius: 20px;
+    padding: 30px 40px;
+    box-shadow: 0 0 25px rgba(255 255 255 / 0.2);
+    position: relative;
+  }
+  h1 {
+    font-weight: 700;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    user-select: none;
+  }
+  #logo {
+    width: 80px;
+    margin: 0 auto 20px;
+    display: block;
+    filter: drop-shadow(0 0 5px #0ff);
+    animation: pulseLogo 2s infinite ease-in-out;
+  }
+  @keyframes pulseLogo {
+    0%, 100% {transform: scale(1);}
+    50% {transform: scale(1.1);}
+  }
+  .emoji {
+    font-size: 3.5rem;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% {transform: translateY(0);}
+    50% {transform: translateY(-15px);}
+  }
+  label {
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  input[type=text], input[type=number] {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1.2rem;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+  }
+  input[type=text]:focus, input[type=number]:focus {
+    box-shadow: 0 0 15px #0ff;
+    background-color: rgba(255 255 255 / 0.1);
+    color: #fff;
+  }
+  button {
+    width: 100%;
+    background: #00fff7;
+    border: none;
+    padding: 16px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 15px;
+    cursor: pointer;
+    color: #003333;
+    box-shadow: 0 6px 12px #00fff7aa;
+    transition: background 0.3s ease, transform 0.2s ease;
+    user-select: none;
+  }
+  button:hover {
+    background: #00d6c0;
+    transform: scale(1.05);
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+  .step {
+    display: none;
+    animation: fadeIn 0.7s ease forwards;
+  }
+  .step.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  #confetti-canvas {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 9999;
+  }
+  .robux-number {
+    font-size: 5rem;
+    font-weight: 900;
+    text-align: center;
+    margin: 30px 0 20px;
+    color: #00fff7;
+    text-shadow: 0 0 15px #00fff7aa;
+    user-select: none;
+  }
+  .robux-icon {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    vertical-align: middle;
+    margin-left: 10px;
+    animation: popIn 0.6s ease forwards;
+  }
+  @keyframes popIn {
+    from {transform: scale(0);}
+    to {transform: scale(1);}
+  }
+  #warning {
+    background: #ff4444dd;
+    color: #fff;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 14px;
+    text-align: center;
+    margin-top: 35px;
+    font-size: 1.1rem;
+    box-shadow: 0 0 15px #ff4444cc;
+    user-select: none;
+  }
+  #warning p {
+    margin: 6px 0;
+  }
+  .emoji-small {
+    font-size: 1.5rem;
+    margin-right: 8px;
+  }
+</style>
 </head>
 <body>
-  <img src="https://i.imgur.com/3X4H1zv.png" alt="Logo drôle" class="logo" />
+  <canvas id="confetti-canvas"></canvas>
+  <div id="app" role="main" aria-live="polite">
+    <img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Roblox_Logo_2015.svg/1200px-Roblox_Logo_2015.svg.png" alt="Logo Robux" />
+    
+    <!-- Step 1: Pseudo -->
+    <section class="step active" id="step-pseudo">
+      <div class="emoji" aria-hidden="true">😄🤖</div>
+      <label for="inputPseudo">Mettez votre pseudo :</label>
+      <input type="text" id="inputPseudo" placeholder="ex: roi_des_robots" autocomplete="off" />
+      <button id="btnNextPseudo" aria-label="Passer à l’étape suivante">Suivant ➡️</button>
+    </section>
 
-  <div class="page active" id="page1">
-    <div class="emoji">😂</div>
-    <h2>Mettez votre pseudo Roblox ci-dessous</h2>
-    <input type="text" id="pseudo" placeholder="ex: roi_des_robux" />
-    <br>
-    <button onclick="nextPage(2)">Suivant</button>
+    <!-- Step 2: Choix du nombre de Robux -->
+    <section class="step" id="step-amount">
+      <div class="emoji" aria-hidden="true">💰✨</div>
+      <label for="inputAmount">Combien de Robux voulez-vous ?</label>
+      <input type="number" id="inputAmount" min="1" max="10000" placeholder="100" autocomplete="off" />
+      <button id="btnNextAmount" aria-label="Passer à l’étape suivante">Suivant ➡️</button>
+    </section>
+
+    <!-- Step 3: Vérification humaine -->
+    <section class="step" id="step-human-check">
+      <div class="emoji" aria-hidden="true">🕵️‍♂️🧠</div>
+      <h2 style="text-align:center; font-weight:700; font-size:1.8rem;">Êtes-vous un humain ?</h2>
+      <div style="text-align:center; margin: 20px 0;">
+        <button id="btnHumanYes" aria-label="Confirmer que je suis un humain">Oui, je suis humain ✔️</button>
+      </div>
+    </section>
+
+    <!-- Step 4: Génération Robux -->
+    <section class="step" id="step-result">
+      <div class="emoji" aria-hidden="true" style="font-size:4rem;">🎉💸</div>
+      <div class="robux-number" id="robuxDisplay">100 <img class="robux-icon" src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Icône Robux" /></div>
+      <p style="text-align:center; font-weight:600; font-size:1.2rem; margin-bottom: 30px;">
+        Vos <span id="finalAmount">100</span> Robux ont été enregistrés avec succès ! 🎊
+      </p>
+      <button id="btnNextFinal" aria-label="Passer à l’avertissement final">Suivant ➡️</button>
+    </section>
+
+    <!-- Step 5: Avertissement final -->
+    <section class="step" id="step-warning">
+      <div class="emoji" aria-hidden="true" style="font-size: 3rem;">⚠️❗</div>
+      <h2 style="text-align:center; font-weight:700; margin-bottom: 12px;">Important - Lisez bien 👇</h2>
+      <div id="warning" role="alert" tabindex="0" aria-live="assertive">
+        <p><span class="emoji-small" aria-hidden="true">😄</span>Ce site est juste une blague pour faire rigoler votre pote.</p>
+        <p>Il faut acheter des Robux uniquement via la société officielle.</p>
+        <p>Les générateurs de Robux sont des arnaques ou des virus.</p>
+        <p>Seul Microsoft Rewards peut offrir des Robux gratuits.</p>
+        <p>Ne faites pas confiance aux faux générateurs ou aux promesses sur YouTube.</p>
+      </div>
+    </section>
   </div>
 
-  <div class="page" id="page2">
-    <h2>Combien de Robux voulez-vous ?</h2>
-    <select id="robuxAmount">
-      <option value="100">100 Robux</option>
-      <option value="500">500 Robux</option>
-      <option value="1000">1000 Robux</option>
-    </select>
-    <br>
-    <button onclick="nextPage(3)">Suivant</button>
-  </div>
+<script>
+// Gestion des étapes
+const steps = [...document.querySelectorAll('.step')];
+let currentStep = 0;
 
-  <div class="page" id="page3">
-    <h2>Êtes-vous un humain ?</h2>
-    <button onclick="nextPage(4)">Oui</button>
-  </div>
+const inputPseudo = document.getElementById('inputPseudo');
+const btnNextPseudo = document.getElementById('btnNextPseudo');
+const inputAmount = document.getElementById('inputAmount');
+const btnNextAmount = document.getElementById('btnNextAmount');
+const btnHumanYes = document.getElementById('btnHumanYes');
+const stepResult = document.getElementById('step-result');
+const robuxDisplay = document.getElementById('robuxDisplay');
+const finalAmount = document.getElementById('finalAmount');
+const btnNextFinal = document.getElementById('btnNextFinal');
 
-  <div class="page" id="page4">
-    <h2 id="resultMessage"></h2>
-    <div id="robuxShower"></div>
-    <div class="warning">
-      ⚠️ Cliquez sur « Suivant » pour finaliser
-    </div>
-    <button onclick="nextPage(5)">Suivant</button>
-  </div>
+function showStep(index) {
+  steps.forEach((step, i) => {
+    step.classList.toggle('active', i === index);
+  });
+  currentStep = index;
+}
+btnNextPseudo.addEventListener('click', () => {
+  if(inputPseudo.value.trim().length < 3) {
+    alert('Ton pseudo doit faire au moins 3 caractères !');
+    return;
+  }
+  showStep(1);
+  inputAmount.focus();
+});
+btnNextAmount.addEventListener('click', () => {
+  const amount = Number(inputAmount.value);
+  if(!amount || amount < 1 || amount > 10000) {
+    alert('Choisis un nombre de Robux entre 1 et 10 000.');
+    return;
+  }
+  showStep(2);
+});
+btnHumanYes.addEventListener('click', () => {
+  const amount = Number(inputAmount.value);
+  finalAmount.textContent = amount;
+  robuxDisplay.innerHTML = `${amount} <img class="robux-icon" src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Icône Robux" />`;
+  showStep(3);
+  launchConfetti(amount);
+});
+btnNextFinal.addEventListener('click', () => {
+  showStep(4);
+});
 
-  <div class="page" id="page5">
-    <h2>🚨 Avertissement 🚨</h2>
-    <p>
-      Ce site est juste une blague pour faire rigoler votre pote 😄.<br><br>
-      Il faut acheter des Robux uniquement via la société officielle.<br>
-      Les générateurs de Robux sont des arnaques ou des virus.<br>
-      Seul Microsoft Rewards peut offrir des Robux gratuits.<br>
-      Ne faites pas confiance aux faux générateurs ou aux promesses sur YouTube.
-    </p>
-  </div>
+// Confettis
+const confettiCanvas = document.getElementById('confetti-canvas');
+const ctx = confettiCanvas.getContext('2d');
+let confettiElements = [];
 
-  <script>
-    function nextPage(pageNumber) {
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-      document.getElementById('page' + pageNumber).classList.add('active');
-
-      if (pageNumber === 4) {
-        const amount = document.getElementById('robuxAmount').value;
-        document.getElementById('resultMessage').innerText = `🎉 Vos ${amount} Robux sont enregistrés avec succès ! 🎉`;
-        const shower = document.getElementById('robuxShower');
-        shower.innerHTML = '';
-        for (let i = 0; i < 12; i++) {
-          const span = document.createElement('span');
-          span.className = 'robux-icon';
-          span.textContent = '🟩';
-          shower.appendChild(span);
-        }
-      }
-    }
-  </script>
-</body>
-</html>
+function resizeCanvas() {
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize
