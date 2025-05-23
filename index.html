@@ -1,63 +1,127 @@
-document.body.innerHTML = `
-  <div style="text-align: center; padding: 20px;">
-    <h1>🎉 Bienvenue ! 🎉</h1>
-    <p>🤣 Entrez votre pseudo en bas !</p>
-    <input type="text" placeholder="Ex : roi des robux" id="username" style="padding: 10px; font-size: 16px;" />
-    <br><br>
-    <button onclick="suivantEtape()" style="padding: 10px 20px; font-size: 16px;">Suivant</button>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Générateur de Robux Drôle</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
+    }
+    .container {
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+    }
+    .hidden {
+      display: none;
+    }
+    .confetti {
+      font-size: 20px;
+      animation: float 2s infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .warning {
+      color: red;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .info {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="step1">
+    <h1>🤣 Bienvenue sur le Générateur de Robux !</h1>
+    <p>Entrez votre pseudo Roblox ci-dessous :</p>
+    <input type="text" id="username" placeholder="Ex: roi_des_robux">
+    <br>
+    <button onclick="goToStep2()">Suivant</button>
   </div>
-`;
 
-function suivantEtape() {
-  const username = document.getElementById("username").value;
-  if (!username) {
-    alert("Veuillez entrer votre pseudo !");
-    return;
-  }
+  <div class="container hidden" id="step2">
+    <h2>Combien de Robux voulez-vous ?</h2>
+    <select id="robuxAmount">
+      <option value="100">100 Robux</option>
+      <option value="500">500 Robux</option>
+      <option value="1000">1000 Robux</option>
+      <option value="10000">10 000 Robux</option>
+    </select>
+    <br>
+    <button onclick="goToStep3()">Suivant</button>
+  </div>
 
-  document.body.innerHTML = `
-    <div style="text-align: center; padding: 20px;">
-      <h2>Combien de robux voulez-vous, ${username} ?</h2>
-      <select id="robuxCount" style="font-size: 16px; padding: 5px;">
-        <option value="100">100 Robux</option>
-        <option value="500">500 Robux</option>
-        <option value="1000">1000 Robux</option>
-        <option value="10000">10 000 Robux</option>
-      </select>
-      <br><br>
-      <button onclick="verificationHumaine()" style="padding: 10px 20px; font-size: 16px;">Suivant</button>
-    </div>
-  `;
-}
+  <div class="container hidden" id="step3">
+    <h2>Vérification humaine</h2>
+    <p>Est-ce que vous êtes un humain ?</p>
+    <button onclick="goToStep4()">Oui</button>
+  </div>
 
-function verificationHumaine() {
-  const count = document.getElementById("robuxCount").value;
+  <div class="container hidden" id="step4">
+    <h2 id="result"></h2>
+    <div id="confetti">🎉🎉🎉</div>
+    <p class="warning">⚠️ Cliquez sur le bouton suivant pour finaliser ⚠️</p>
+    <button onclick="showWarning()">Suivant</button>
+  </div>
 
-  document.body.innerHTML = `
-    <div style="text-align: center; padding: 20px;">
-      <h2>Êtes-vous un humain ?</h2>
-      <button onclick="validerRobux(${count})" style="padding: 10px 20px; font-size: 16px;">Oui</button>
-    </div>
-  `;
-}
+  <div class="container hidden" id="final">
+    <h2>🚫 Avertissement !</h2>
+    <p class="warning">Les Robux gratuits sont impossibles !</p>
+    <p class="info">
+      Ce site est juste une blague pour faire rigoler votre pote 😄.<br>
+      Il faut acheter des Robux uniquement via la société officielle.<br>
+      Les générateurs de Robux sont des arnaques ou des virus.<br>
+      Seul Microsoft Rewards peut offrir des Robux gratuits.<br>
+      Ne faites pas confiance aux faux générateurs ou aux promesses sur YouTube.
+    </p>
+  </div>
 
-function validerRobux(count) {
-  const emojis = "💸💰🪙".repeat(Math.min(count / 100, 10));
+  <script>
+    function goToStep2() {
+      const pseudo = document.getElementById("username").value;
+      if (!pseudo) return alert("Veuillez entrer votre pseudo !");
+      document.getElementById("step1").classList.add("hidden");
+      document.getElementById("step2").classList.remove("hidden");
+    }
 
-  document.body.innerHTML = `
-    <div style="text-align: center; padding: 20px;">
-      <h2>🎉 Vos ${count} Robux ont été enregistrés avec succès !</h2>
-      <p>Regardez votre compte ! ${emojis}</p>
-      <br>
-      <p style="color: red; font-weight: bold;">⚠️ Vous devez cliquer sur le bouton suivant ⚠️</p>
-      <p style="font-size: 14px; color: gray; max-width: 500px; margin: auto;">
-        Ce site est juste un site qui donne des faux Robux pour faire rigoler votre pote 😄.<br>
-        Les Robux gratuits sont impossibles. Il faut les acheter auprès de la société officielle.<br>
-        Les générateurs de Robux sont des arnaques ou des virus.<br>
-        Seul Microsoft Rewards peut donner des Robux gratuits.<br>
-        Ne faites pas confiance aux générateurs de Robux ni aux gens qui vous promettent des Robux sur YouTube.
-      </p>
-    </div>
-  `;
-}
+    function goToStep3() {
+      document.getElementById("step2").classList.add("hidden");
+      document.getElementById("step3").classList.remove("hidden");
+    }
 
+    function goToStep4() {
+      const amount = document.getElementById("robuxAmount").value;
+      document.getElementById("step3").classList.add("hidden");
+      document.getElementById("step4").classList.remove("hidden");
+      document.getElementById("result").innerHTML = `🎊 Vos ${amount} Robux sont générés avec succès ! 🎊`;
+    }
+
+    function showWarning() {
+      document.getElementById("step4").classList.add("hidden");
+      document.getElementById("final").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
