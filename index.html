@@ -1,219 +1,63 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <title>Générateur de Robux Masterclass™</title>
-  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/0/05/Robux_2019_Logo.svg" type="image/svg+xml" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(to right, #00c6ff, #0072ff);
-      color: white;
-      text-align: center;
-      overflow-x: hidden;
-      user-select: none;
-    }
-    .container {
-      padding: 40px 20px;
-      max-width: 500px;
-      margin: auto;
-    }
-    h1 {
-      margin-bottom: 30px;
-    }
-    input[type=text], select {
-      padding: 12px;
-      font-size: 18px;
-      border-radius: 10px;
-      border: none;
-      margin: 10px 0;
-      width: 80%;
-      max-width: 350px;
-      text-align: center;
-    }
-    button {
-      padding: 12px 30px;
-      font-size: 18px;
-      border-radius: 10px;
-      border: none;
-      margin-top: 20px;
-      background-color: #00ff87;
-      color: black;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #00cc6a;
-    }
-    .page {
-      display: none;
-    }
-    .page.active {
-      display: block;
-    }
-    #resultRobux {
-      font-size: 48px;
-      font-weight: bold;
-      margin: 30px 0 10px 0;
-      color: #ffd700;
-      position: relative;
-      user-select: text;
-    }
-    #robuxLogo {
-      width: 80px;
-      vertical-align: middle;
-      margin-left: 10px;
-      animation: bounce 1s infinite alternate;
-    }
-    @keyframes bounce {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-10px); }
-    }
-    .confetti {
-      position: fixed;
-      width: 15px;
-      height: 15px;
-      background-color: #ffd700;
-      top: 0;
-      left: 0;
-      opacity: 0.9;
-      pointer-events: none;
-      animation: fall 3s linear forwards;
-      border-radius: 3px;
-      z-index: 9999;
-    }
-    @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-    #warning {
-      margin-top: 40px;
-      font-size: 16px;
-      color: #ffaaaa;
-      background-color: rgba(0,0,0,0.3);
-      padding: 15px;
-      border-radius: 12px;
-      user-select: text;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    #humanCheckImg {
-      width: 100px;
-      margin: 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 3px solid transparent;
-      transition: border-color 0.3s;
-    }
-    #humanCheckImg.selected {
-      border-color: yellow;
-    }
-    #wink {
-      font-size: 28px;
-      user-select: none;
-      display: inline-block;
-      margin-left: 10px;
-      animation: wink 2s infinite;
-    }
-    @keyframes wink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Robux_2019_Logo.svg" alt="Robux Logo" style="width:120px; margin-bottom: 20px;" />
-    <h1>🌟 Générateur de Robux Masterclass™ 🌟</h1>
-
-    <!-- Page 1 : Pseudo -->
-    <div id="page1" class="page active">
-      <p>Entrez votre pseudo Roblox :</p>
-      <input type="text" id="pseudo" placeholder="ex: LeRoiDuRobux" />
-      <br />
-      <button onclick="goToPage(2)">Suivant</button>
-    </div>
-
-    <!-- Page 2 : Montant -->
-    <div id="page2" class="page">
-      <p>Choisissez le montant de Robux à générer :</p>
-      <select id="amount">
-        <option value="100">100</option>
-        <option value="10000">10 000</option>
-        <option value="20000">20 000</option>
-        <option value="80000">80 000</option>
-        <option value="100000">100 000</option>
-        <option value="infini">Infini ♾️</option>
-      </select>
-      <br />
-      <button onclick="goToPage(3)">Suivant</button>
-    </div>
-
-    <!-- Page 3 : Vérification humaine -->
-    <div id="page3" class="page">
-      <p>Vérification humaine : cliquez sur toutes les images qui contiennent une voiture</p>
-      <div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Toyota_GR_Yaris_IMG_4963.jpg/320px-Toyota_GR_Yaris_IMG_4963.jpg" class="humanCheckImg" onclick="toggleSelect(this)" alt="Voiture 1" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Mountain_Landscape_in_Swiss_Alps.jpg/320px-Mountain_Landscape_in_Swiss_Alps.jpg" class="humanCheckImg" onclick="toggleSelect(this)" alt="Montagne" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Tesla_Model_3_parked%2C_front_driver_side.jpg/320px-Tesla_Model_3_parked%2C_front_driver_side.jpg" class="humanCheckImg" onclick="toggleSelect(this)" alt="Voiture 2" />
-      </div>
-      <br />
-      <button onclick="verifyHuman()">Ok, je suis humain</button>
-    </div>
-
-    <!-- Page 4 : Résultat -->
-    <div id="page4" class="page">
-      <div id="resultRobuxContainer">
-        <span id="resultRobux"></span>
-        <img id="robuxLogo" src="https://upload.wikimedia.org/wikipedia/commons/0/05/Robux_2019_Logo.svg" alt="Robux" />
-        <span id="wink">😉</span>
-      </div>
-      <p>Vos Robux ont été générés avec succès !</p>
-      <button onclick="goToPage(5)">Suivant</button>
-    </div>
-
-    <!-- Page 5 : Avertissement -->
-    <div id="page5" class="page">
-      <h2>Avertissement important ⚠️</h2>
-      <div id="warning">
-        <p>Les Robux gratuits sont impossibles à générer.</p>
-        <p>Il faut acheter des Robux uniquement auprès de la société Roblox.</p>
-        <p>Les générateurs de Robux sont des arnaques ou peuvent contenir des virus.</p>
-        <p>Seul Microsoft Rewards peut offrir des Robux gratuitement dans certains cas.</p>
-        <p>Ne faites pas confiance aux générateurs de Robux, ni aux personnes promettant des Robux sur YouTube.</p>
-      </div>
-    </div>
+document.body.innerHTML = `
+  <div style="text-align: center; padding: 20px;">
+    <h1>🎉 Bienvenue ! 🎉</h1>
+    <p>🤣 Entrez votre pseudo en bas !</p>
+    <input type="text" placeholder="Ex : roi des robux" id="username" style="padding: 10px; font-size: 16px;" />
+    <br><br>
+    <button onclick="suivantEtape()" style="padding: 10px 20px; font-size: 16px;">Suivant</button>
   </div>
+`;
 
-<script>
-  let currentPage = 1;
-
-  function goToPage(n) {
-    // Validation avant passage de page
-    if (n === 2) {
-      const pseudo = document.getElementById('pseudo').value.trim();
-      if (!pseudo) {
-        alert("Veuillez entrer un pseudo valide.");
-        return;
-      }
-    }
-    if (n === 4) {
-      // Générer animation Robux et texte
-      displayRobux();
-    }
-    // Affichage pages
-    document.getElementById(`page${currentPage}`).classList.remove('active');
-    document.getElementById(`page${n}`).classList.add('active');
-    currentPage = n;
+function suivantEtape() {
+  const username = document.getElementById("username").value;
+  if (!username) {
+    alert("Veuillez entrer votre pseudo !");
+    return;
   }
 
-  function toggleSelect(img) {
-    img.classList.toggle('selected');
-  }
+  document.body.innerHTML = `
+    <div style="text-align: center; padding: 20px;">
+      <h2>Combien de robux voulez-vous, ${username} ?</h2>
+      <select id="robuxCount" style="font-size: 16px; padding: 5px;">
+        <option value="100">100 Robux</option>
+        <option value="500">500 Robux</option>
+        <option value="1000">1000 Robux</option>
+        <option value="10000">10 000 Robux</option>
+      </select>
+      <br><br>
+      <button onclick="verificationHumaine()" style="padding: 10px 20px; font-size: 16px;">Suivant</button>
+    </div>
+  `;
+}
 
-  function verifyHuman() {
-    // On vérifie si au moins une voiture a été sélectionnée (les images avec voitures ont alt contenant "Voiture
+function verificationHumaine() {
+  const count = document.getElementById("robuxCount").value;
+
+  document.body.innerHTML = `
+    <div style="text-align: center; padding: 20px;">
+      <h2>Êtes-vous un humain ?</h2>
+      <button onclick="validerRobux(${count})" style="padding: 10px 20px; font-size: 16px;">Oui</button>
+    </div>
+  `;
+}
+
+function validerRobux(count) {
+  const emojis = "💸💰🪙".repeat(Math.min(count / 100, 10));
+
+  document.body.innerHTML = `
+    <div style="text-align: center; padding: 20px;">
+      <h2>🎉 Vos ${count} Robux ont été enregistrés avec succès !</h2>
+      <p>Regardez votre compte ! ${emojis}</p>
+      <br>
+      <p style="color: red; font-weight: bold;">⚠️ Vous devez cliquer sur le bouton suivant ⚠️</p>
+      <p style="font-size: 14px; color: gray; max-width: 500px; margin: auto;">
+        Ce site est juste un site qui donne des faux Robux pour faire rigoler votre pote 😄.<br>
+        Les Robux gratuits sont impossibles. Il faut les acheter auprès de la société officielle.<br>
+        Les générateurs de Robux sont des arnaques ou des virus.<br>
+        Seul Microsoft Rewards peut donner des Robux gratuits.<br>
+        Ne faites pas confiance aux générateurs de Robux ni aux gens qui vous promettent des Robux sur YouTube.
+      </p>
+    </div>
+  `;
+}
+
