@@ -1,251 +1,219 @@
-Bien sûr, voici la version complète et fonctionnelle du générateur de Robux avec toutes les étapes que tu as demandées, directement dans une seule page HTML. Tu peux copier-coller ce code dans un fichier `.html` et l’ouvrir dans ton navigateur pour tester :
-
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DrôleBlague Générateur de Robux</title>
-<style>
-  body {
-    margin: 0; padding: 0;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: linear-gradient(120deg, #0066ff, #00ffaa);
-    color: white;
-    text-align: center;
-    overflow-x: hidden;
-  }
-  .container {
-    max-width: 480px;
-    margin: 40px auto;
-    padding: 20px;
-    background: rgba(0,0,0,0.25);
-    border-radius: 20px;
-    box-shadow: 0 0 20px #00ffaa;
-  }
-  h1 {
-    margin-bottom: 20px;
-  }
-  input[type=text], select {
-    width: 80%;
-    padding: 12px 15px;
-    margin: 10px 0 20px 0;
-    border-radius: 12px;
-    border: none;
-    font-size: 18px;
-  }
-  button {
-    padding: 12px 25px;
-    font-size: 18px;
-    border-radius: 12px;
-    border: none;
-    background-color: #00ff8a;
-    color: black;
-    cursor: pointer;
-    box-shadow: 0 0 8px #00ff8a;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background-color: #00cc6a;
-  }
-  .page {
-    display: none;
-  }
-  .page.active {
-    display: block;
-  }
-  .image-choice {
-    width: 100px; height: 100px;
-    margin: 8px;
-    border-radius: 12px;
-    border: 4px solid transparent;
-    cursor: pointer;
-    object-fit: cover;
-    transition: border-color 0.3s ease;
-  }
-  .image-choice.selected {
-    border-color: yellow;
-  }
-  #result-message {
-    font-size: 22px;
-    margin: 25px 0;
-  }
-  #robux-logo {
-    width: 80px;
-    margin: 15px auto;
-    display: block;
-  }
-  #robux-amount-display {
-    font-size: 48px;
-    margin: 10px 0;
-    font-weight: bold;
-    color: #00ff8a;
-    text-shadow: 0 0 10px #00ff8a;
-    position: relative;
-  }
-  #confetti-container {
-    position: relative;
-    width: 100%;
-    height: 150px;
-    margin-top: 10px;
-    overflow: visible;
-  }
-  .confetti {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/05/Robux_2019_Logo.svg');
-    background-size: contain;
-    animation-name: confettiFall;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
-  @keyframes confettiFall {
-    0% {
-      opacity: 1;
-      transform: translateY(0) rotate(0deg);
+  <meta charset="UTF-8" />
+  <title>Générateur de Robux Masterclass™</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/0/05/Robux_2019_Logo.svg" type="image/svg+xml" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      user-select: none;
     }
-    100% {
-      opacity: 0;
-      transform: translateY(150px) rotate(360deg);
+    .container {
+      padding: 40px 20px;
+      max-width: 500px;
+      margin: auto;
     }
-  }
-  #warning-box {
-    margin-top: 30px;
-    background: #ff4444cc;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 15px;
-    font-size: 16px;
-    box-shadow: 0 0 15px #ff4444;
-  }
-  #wink {
-    display: inline-block;
-    font-size: 24px;
-    cursor: default;
-    user-select: none;
-    margin-left: 10px;
-    animation: winkAnimation 3s infinite;
-  }
-  @keyframes winkAnimation {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-</style>
+    h1 {
+      margin-bottom: 30px;
+    }
+    input[type=text], select {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      margin: 10px 0;
+      width: 80%;
+      max-width: 350px;
+      text-align: center;
+    }
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 20px;
+      background-color: #00ff87;
+      color: black;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #00cc6a;
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+    #resultRobux {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 30px 0 10px 0;
+      color: #ffd700;
+      position: relative;
+      user-select: text;
+    }
+    #robuxLogo {
+      width: 80px;
+      vertical-align: middle;
+      margin-left: 10px;
+      animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+    .confetti {
+      position: fixed;
+      width: 15px;
+      height: 15px;
+      background-color: #ffd700;
+      top: 0;
+      left: 0;
+      opacity: 0.9;
+      pointer-events: none;
+      animation: fall 3s linear forwards;
+      border-radius: 3px;
+      z-index: 9999;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    #warning {
+      margin-top: 40px;
+      font-size: 16px;
+      color: #ffaaaa;
+      background-color: rgba(0,0,0,0.3);
+      padding: 15px;
+      border-radius: 12px;
+      user-select: text;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #humanCheckImg {
+      width: 100px;
+      margin: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: border-color 0.3s;
+    }
+    #humanCheckImg.selected {
+      border-color: yellow;
+    }
+    #wink {
+      font-size: 28px;
+      user-select: none;
+      display: inline-block;
+      margin-left: 10px;
+      animation: wink 2s infinite;
+    }
+    @keyframes wink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>😂 DrôleBlague Générateur de Robux 😂</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Robux_2019_Logo.svg" alt="Robux Logo" style="width:120px; margin-bottom: 20px;" />
+    <h1>🌟 Générateur de Robux Masterclass™ 🌟</h1>
 
-    <!-- Page 1: Pseudo -->
+    <!-- Page 1 : Pseudo -->
     <div id="page1" class="page active">
       <p>Entrez votre pseudo Roblox :</p>
       <input type="text" id="pseudo" placeholder="ex: LeRoiDuRobux" />
       <br />
-      <button onclick="nextPage(2)">Suivant</button>
+      <button onclick="goToPage(2)">Suivant</button>
     </div>
 
-    <!-- Page 2: Choix du nombre -->
+    <!-- Page 2 : Montant -->
     <div id="page2" class="page">
-      <p>Choisissez le nombre de Robux à générer :</p>
-      <select id="robux-amount-select">
+      <p>Choisissez le montant de Robux à générer :</p>
+      <select id="amount">
         <option value="100">100</option>
         <option value="10000">10 000</option>
         <option value="20000">20 000</option>
         <option value="80000">80 000</option>
         <option value="100000">100 000</option>
-        <option value="infinite">∞ Infini</option>
+        <option value="infini">Infini ♾️</option>
       </select>
       <br />
-      <button onclick="nextPage(3)">Suivant</button>
+      <button onclick="goToPage(3)">Suivant</button>
     </div>
 
-    <!-- Page 3: Captcha voiture -->
+    <!-- Page 3 : Vérification humaine -->
     <div id="page3" class="page">
-      <p>Vérification humaine : Sélectionnez toutes les images contenant une voiture</p>
+      <p>Vérification humaine : cliquez sur toutes les images qui contiennent une voiture</p>
       <div>
-        <img class="image-choice" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Toyota_GR_Yaris_IMG_4963.jpg/320px-Toyota_GR_Yaris_IMG_4963.jpg" onclick="toggleSelect(this)" alt="Voiture" data-iscar="true" />
-        <img class="image-choice" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Mountain_Landscape_in_Swiss_Alps.jpg/320px-Mountain_Landscape_in_Swiss_Alps.jpg" onclick="toggleSelect(this)" alt="Montagne" data-iscar="false" />
-        <img class="image-choice" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Tesla_Model_3_parked%2C_front_driver_side.jpg/320px-Tesla_Model_3_parked%2C_front_driver_side.jpg" onclick="toggleSelect(this)" alt="Voiture" data-iscar="true" />
-        <img class="image-choice" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Cat_in_a_box_looking_out.jpg/320px-Cat_in_a_box_looking_out.jpg" onclick="toggleSelect(this)" alt="Chat" data-iscar="false" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Toyota_GR_Yaris_IMG_4963.jpg/320px-Toyota_GR_Yaris_IMG_4963.jpg" class="humanCheckImg" onclick="toggleSelect(this)" alt="Voiture 1" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Mountain_Landscape_in_Swiss_Alps.jpg/320px-Mountain_Landscape_in_Swiss_Alps.jpg" class="humanCheckImg" onclick="toggleSelect(this)" alt="Montagne" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Tesla_Model_3_parked%2C_front_driver_side.jpg/320px-Tesla_Model_3_parked%2C_front_driver_side.jpg" class="humanCheckImg" onclick="toggleSelect(this)" alt="Voiture 2" />
       </div>
       <br />
-      <button onclick="checkCaptcha()">OK</button>
+      <button onclick="verifyHuman()">Ok, je suis humain</button>
     </div>
 
-    <!-- Page 4: Résultat -->
+    <!-- Page 4 : Résultat -->
     <div id="page4" class="page">
-      <p id="result-message"></p>
-      <div id="robux-amount-display"></div>
-      <div id="confetti-container"></div>
-      <button onclick="nextPage(5)">Suivant <span id="wink">😉</span></button>
+      <div id="resultRobuxContainer">
+        <span id="resultRobux"></span>
+        <img id="robuxLogo" src="https://upload.wikimedia.org/wikipedia/commons/0/05/Robux_2019_Logo.svg" alt="Robux" />
+        <span id="wink">😉</span>
+      </div>
+      <p>Vos Robux ont été générés avec succès !</p>
+      <button onclick="goToPage(5)">Suivant</button>
     </div>
 
-    <!-- Page 5: Avertissement -->
+    <!-- Page 5 : Avertissement -->
     <div id="page5" class="page">
       <h2>Avertissement important ⚠️</h2>
-      <div id="warning-box">
-        <p>
-          Les Robux gratuits sont impossibles à générer.<br />
-          Vous devez les acheter uniquement auprès de la société officielle.<br />
-          Les générateurs de Robux sont des arnaques ou peuvent contenir des virus.<br />
-          Seul Microsoft Rewards peut offrir des Robux gratuitement.<br />
-          Ne faites pas confiance aux générateurs de Robux ni aux personnes promettant d’en donner sur YouTube.
-        </p>
+      <div id="warning">
+        <p>Les Robux gratuits sont impossibles à générer.</p>
+        <p>Il faut acheter des Robux uniquement auprès de la société Roblox.</p>
+        <p>Les générateurs de Robux sont des arnaques ou peuvent contenir des virus.</p>
+        <p>Seul Microsoft Rewards peut offrir des Robux gratuitement dans certains cas.</p>
+        <p>Ne faites pas confiance aux générateurs de Robux, ni aux personnes promettant des Robux sur YouTube.</p>
       </div>
-      <button onclick="resetGenerator()">Terminer</button>
     </div>
   </div>
 
 <script>
   let currentPage = 1;
 
-  function nextPage(pageNum) {
-    if(pageNum === 2){
+  function goToPage(n) {
+    // Validation avant passage de page
+    if (n === 2) {
       const pseudo = document.getElementById('pseudo').value.trim();
       if (!pseudo) {
         alert("Veuillez entrer un pseudo valide.");
         return;
       }
     }
+    if (n === 4) {
+      // Générer animation Robux et texte
+      displayRobux();
+    }
+    // Affichage pages
     document.getElementById(`page${currentPage}`).classList.remove('active');
-    document.getElementById(`page${pageNum}`).classList.add('active');
-    currentPage = pageNum;
+    document.getElementById(`page${n}`).classList.add('active');
+    currentPage = n;
   }
 
   function toggleSelect(img) {
     img.classList.toggle('selected');
   }
 
-  function checkCaptcha() {
-    const images = document.querySelectorAll('#page3 .image-choice');
-    let valid = true;
-    images.forEach(img => {
-      const isCar = img.getAttribute('data-iscar') === 'true';
-      const selected = img.classList.contains('selected');
-      if ((isCar && !selected) || (!isCar && selected)) {
-        valid = false;
-      }
-    });
-    if (!valid) {
-      alert("La vérification a échoué. Veuillez sélectionner uniquement les images avec une voiture.");
-      return;
-    }
-    // Tout est ok, on affiche la page résultat
-    showResult();
-    nextPage(4);
-  }
-
-  function showResult(){
-    const pseudo = document.getElementById('pseudo').value.trim();
-    const amount = document.getElementById('robux-amount-select').value;
-    const resultMessage = document.getElementById('result-message');
-    const amountDisplay = document.getElementById('robux-amount-display');
-    const confettiContainer = document.getElementById('confetti-container');
-    confettiContainer.innerHTML = '';
-
-    let displayAmount =
-```
-
+  function verifyHuman() {
+    // On vérifie si au moins une voiture a été sélectionnée (les images avec voitures ont alt contenant "Voiture
