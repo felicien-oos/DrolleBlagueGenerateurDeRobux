@@ -2,126 +2,104 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Générateur de Robux Drôle</title>
+  <title>Générateur de Robux - Blague</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
+      background-color: #d0e7ff;
       text-align: center;
-      background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
-    }
-    .container {
       padding: 40px;
-      max-width: 600px;
-      margin: auto;
     }
-    .hidden {
+    .page {
       display: none;
     }
-    .confetti {
-      font-size: 20px;
-      animation: float 2s infinite;
+    .active {
+      display: block;
+    }
+    .input-zone, .button {
+      margin-top: 20px;
+    }
+    .button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+    .robux-icon {
+      font-size: 50px;
+      color: #2ecc71;
+      margin: 10px;
+      display: inline-block;
+      animation: float 1s infinite ease-in-out;
     }
     @keyframes float {
       0% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
       100% { transform: translateY(0); }
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .warning {
-      color: red;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-    .info {
-      font-size: 14px;
-      color: #555;
-      margin-top: 10px;
-    }
   </style>
 </head>
 <body>
-  <div class="container" id="step1">
-    <h1>🤣 Bienvenue sur le Générateur de Robux !</h1>
-    <p>Entrez votre pseudo Roblox ci-dessous :</p>
-    <input type="text" id="username" placeholder="Ex: roi_des_robux">
-    <br>
-    <button onclick="goToStep2()">Suivant</button>
+  <div id="page1" class="page active">
+    <h2>😄 Mettez votre pseudo Roblox</h2>
+    <input id="pseudo" type="text" placeholder="Ex : roi_des_robux" class="input-zone">
+    <div><button class="button" onclick="suivant(2)">Suivant</button></div>
   </div>
 
-  <div class="container hidden" id="step2">
+  <div id="page2" class="page">
     <h2>Combien de Robux voulez-vous ?</h2>
-    <select id="robuxAmount">
+    <select id="nombre" class="input-zone">
       <option value="100">100 Robux</option>
       <option value="500">500 Robux</option>
       <option value="1000">1000 Robux</option>
-      <option value="10000">10 000 Robux</option>
     </select>
-    <br>
-    <button onclick="goToStep3()">Suivant</button>
+    <div><button class="button" onclick="suivant(3)">Suivant</button></div>
   </div>
 
-  <div class="container hidden" id="step3">
+  <div id="page3" class="page">
     <h2>Vérification humaine</h2>
-    <p>Est-ce que vous êtes un humain ?</p>
-    <button onclick="goToStep4()">Oui</button>
+    <p>Êtes-vous un humain ?</p>
+    <button class="button" onclick="suivant(4)">Oui</button>
   </div>
 
-  <div class="container hidden" id="step4">
-    <h2 id="result"></h2>
-    <div id="confetti">🎉🎉🎉</div>
-    <p class="warning">⚠️ Cliquez sur le bouton suivant pour finaliser ⚠️</p>
-    <button onclick="showWarning()">Suivant</button>
+  <div id="page4" class="page">
+    <h2 id="robux-message"></h2>
+    <div id="robux-icons"></div>
+    <p>Cliquez sur Suivant pour finaliser</p>
+    <button class="button" onclick="suivant(5)">Suivant</button>
   </div>
 
-  <div class="container hidden" id="final">
-    <h2>🚫 Avertissement !</h2>
-    <p class="warning">Les Robux gratuits sont impossibles !</p>
-    <p class="info">
-      Ce site est juste une blague pour faire rigoler votre pote 😄.<br>
+  <div id="page5" class="page">
+    <div style="background-color: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 20px; border-radius: 10px;">
+      ⚠️ <strong>Avertissement :</strong><br><br>
+      Ce site est juste une blague pour faire rigoler votre pote 😄.<br><br>
       Il faut acheter des Robux uniquement via la société officielle.<br>
       Les générateurs de Robux sont des arnaques ou des virus.<br>
       Seul Microsoft Rewards peut offrir des Robux gratuits.<br>
       Ne faites pas confiance aux faux générateurs ou aux promesses sur YouTube.
-    </p>
+    </div>
   </div>
 
   <script>
-    function goToStep2() {
-      const pseudo = document.getElementById("username").value;
-      if (!pseudo) return alert("Veuillez entrer votre pseudo !");
-      document.getElementById("step1").classList.add("hidden");
-      document.getElementById("step2").classList.remove("hidden");
-    }
+    function suivant(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + page).classList.add('active');
 
-    function goToStep3() {
-      document.getElementById("step2").classList.add("hidden");
-      document.getElementById("step3").classList.remove("hidden");
-    }
+      if (page === 4) {
+        const nombre = document.getElementById('nombre').value;
+        document.getElementById('robux-message').innerText = `🎉 Vos ${nombre} Robux sont enregistrés avec succès ! 🎉`;
 
-    function goToStep4() {
-      const amount = document.getElementById("robuxAmount").value;
-      document.getElementById("step3").classList.add("hidden");
-      document.getElementById("step4").classList.remove("hidden");
-      document.getElementById("result").innerHTML = `🎊 Vos ${amount} Robux sont générés avec succès ! 🎊`;
-    }
-
-    function showWarning() {
-      document.getElementById("step4").classList.add("hidden");
-      document.getElementById("final").classList.remove("hidden");
+        let iconsHTML = '';
+        for (let i = 0; i < 10; i++) {
+          iconsHTML += '<span class="robux-icon">💰</span>';
+        }
+        document.getElementById('robux-icons').innerHTML = iconsHTML;
+      }
     }
   </script>
 </body>
 </html>
+
