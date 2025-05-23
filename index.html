@@ -3,272 +3,281 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Générateur Robux Cool</title>
+<title>Générateur de Robux Ultra Cool</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
-  body {
-    margin:0; padding:0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-    color: white;
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto+Mono&display=swap');
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    background: radial-gradient(circle at center, #001f4d, #000014);
+    font-family: 'Roboto Mono', monospace;
+    color: #e0e0ff;
+    overflow: hidden;
+    user-select: none;
+  }
+  #app {
+    max-width: 420px;
+    margin: auto;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    user-select: none;
-    overflow: hidden;
-  }
-  #container {
-    background: rgba(0,0,0,0.65);
-    padding: 40px 50px;
-    border-radius: 25px;
-    width: 360px;
-    box-shadow: 0 0 25px #00d2ff;
     text-align: center;
     position: relative;
+    padding: 20px;
   }
   h1 {
-    margin-bottom: 15px;
-    font-size: 2.5rem;
-  }
-  input[type="text"], input[type="number"] {
-    width: 85%;
-    padding: 12px 15px;
-    margin-top: 10px;
-    border-radius: 12px;
-    border: none;
-    font-size: 1.3rem;
-    text-align: center;
-    outline: none;
-  }
-  input[type="number"]::-webkit-inner-spin-button, 
-  input[type="number"]::-webkit-outer-spin-button { 
-    -webkit-appearance: none; 
-    margin: 0; 
-  }
-  button {
-    margin-top: 25px;
-    background: #00d2ff;
-    border: none;
-    border-radius: 25px;
-    padding: 15px 40px;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #004e6d;
-    cursor: pointer;
-    transition: 0.3s ease;
-    user-select:none;
-  }
-  button:hover:not(:disabled) {
-    background: #00a9d6;
-    color: white;
-  }
-  button:disabled {
-    background: #004e6d;
-    color: #66c9ff;
-    cursor: not-allowed;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 2.6rem;
+    margin-bottom: 10px;
+    color: #66ccff;
+    text-shadow: 0 0 10px #66ccff;
   }
   .emoji {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    animation: bounce 1.2s infinite;
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    animation: bounce 1.3s infinite alternate;
   }
   @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-12px); }
   }
-  .page {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    user-select:none;
+  input[type="text"], input[type="number"] {
+    font-size: 1.6rem;
+    padding: 10px 15px;
+    border-radius: 12px;
+    border: none;
+    width: 90%;
+    max-width: 320px;
+    text-align: center;
+    margin-bottom: 25px;
+    outline: none;
+    box-shadow: 0 0 15px #3399ff44;
+    background: #001f4d99;
+    color: #ccf0ff;
+    transition: box-shadow 0.3s ease;
   }
-  .page.active {
-    display: block;
-    opacity: 1;
+  input[type="text"]:focus, input[type="number"]:focus {
+    box-shadow: 0 0 25px #66ccff;
   }
-  #robux-amount {
-    font-size: 5rem;
+  button {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    background: linear-gradient(90deg, #33aaff, #0066cc);
+    border: none;
+    border-radius: 15px;
+    padding: 14px 40px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 18px #33aaff88;
+    transition: box-shadow 0.3s ease, background 0.3s ease;
+    user-select: none;
+  }
+  button:hover {
+    background: linear-gradient(90deg, #66cfff, #0099ff);
+    box-shadow: 0 0 28px #66cfffcc;
+  }
+  button:active {
+    transform: scale(0.96);
+  }
+  .warning {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.1rem;
+    color: #ff6666;
+    background: #330000aa;
+    padding: 12px 20px;
+    border-radius: 15px;
+    margin-top: 30px;
+    line-height: 1.3;
+    box-shadow: 0 0 15px #ff4444cc;
+    user-select: text;
+    animation: pulse 2.5s infinite;
+    max-width: 420px;
+  }
+  @keyframes pulse {
+    0%, 100% { text-shadow: 0 0 12px #ff6666; }
+    50% { text-shadow: 0 0 25px #ff2222; }
+  }
+  .centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .human-check {
+    margin-bottom: 30px;
+  }
+  #confetti-canvas {
+    position: fixed;
+    pointer-events: none;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 10;
+  }
+  .robux-count {
+    font-family: 'Orbitron', sans-serif;
     font-weight: 900;
-    color: #00ffff;
-    text-shadow: 0 0 15px #00ffff;
-    margin: 20px 0;
-  }
-  #robux-container {
+    font-size: 4rem;
+    color: #33ccff;
+    text-shadow: 0 0 20px #33ccffcc;
+    margin-bottom: 20px;
     position: relative;
-    height: 140px;
-    overflow: visible;
+    user-select: none;
   }
   .robux-icon {
     position: absolute;
-    font-size: 2.8rem;
-    color: #00ffff;
-    animation: floatUp 3s ease-out forwards;
-    user-select:none;
+    top: -30px;
+    right: -40px;
+    font-size: 3.4rem;
+    animation: floatRobux 3s ease-in-out infinite;
+    color: #00ffffcc;
+    filter: drop-shadow(0 0 6px #00ffffcc);
   }
-  @keyframes floatUp {
-    0% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-150px) scale(1.5);
-    }
+  @keyframes floatRobux {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-20px); opacity: 0.7; }
   }
-  .warning-text {
-    font-family: 'Courier Prime', monospace;
+  .footer-text {
+    margin-top: 12px;
     font-size: 1.1rem;
-    color: #ff5555;
-    margin-top: 40px;
-    border: 2px solid #ff5555;
-    border-radius: 12px;
-    padding: 15px;
-    background: rgba(255, 85, 85, 0.15);
-    user-select:none;
+    color: #88ccffcc;
+    user-select: none;
   }
-  #footer-warning {
-    margin-top: 25px;
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.9rem;
-    color: #ffcc00;
-    background: rgba(0,0,0,0.4);
-    padding: 10px;
-    border-radius: 10px;
-    user-select:none;
+  .logo {
+    width: 140px;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 0 15px #33aaffcc);
   }
 </style>
 </head>
 <body>
 
-<div id="container">
-
-  <!-- Page 1 -->
-  <div class="page active" id="page1">
-    <div class="emoji">😄</div>
-    <h1>Mets ton pseudo</h1>
-    <input type="text" id="pseudo-input" placeholder="Ex: roi_des_robux" maxlength="15" autocomplete="off" />
-    <button id="next1" disabled>Suivant</button>
-  </div>
-
-  <!-- Page 2 -->
-  <div class="page" id="page2">
-    <div class="emoji">💰</div>
-    <h1>Combien de Robux veux-tu ?</h1>
-    <input type="number" id="robux-input" placeholder="Ex: 100" min="1" max="10000" />
-    <button id="next2" disabled>Suivant</button>
-  </div>
-
-  <!-- Page 3 -->
-  <div class="page" id="page3">
-    <div class="emoji">🧠</div>
-    <h1>Es-tu un humain ?</h1>
-    <button id="human-yes">Oui, je suis humain</button>
-  </div>
-
-  <!-- Page 4 -->
-  <div class="page" id="page4">
-    <h1>Ton nombre de <span id="robux-final-amount"></span> Robux est prêt !</h1>
-    <div id="robux-container"></div>
-    <button id="next4">Suivant</button>
-    <div id="footer-warning">
-      Clique sur « Suivant » pour finaliser.<br><br>
-      <strong>Attention :</strong><br>
-      Ce site est juste une blague pour faire rigoler ton pote 😄.<br>
-      Il faut acheter des Robux uniquement via la société officielle.<br>
-      Les générateurs de Robux sont des arnaques ou des virus.<br>
-      Seul Microsoft Rewards peut offrir des Robux gratuits.<br>
-      Ne fais pas confiance aux faux générateurs ou aux promesses sur YouTube.
-    </div>
-  </div>
-
-  <!-- Page 5 -->
-  <div class="page" id="page5">
-    <h1 style="color:#ff4444; font-family: 'Courier Prime', monospace; font-size:2rem;">⚠️ Avertissement Final ⚠️</h1>
-    <p style="font-family: 'Courier Prime', monospace; font-size:1.3rem; margin-top: 20px; line-height:1.4;">
-      Ce site est juste une blague pour faire rigoler ton pote 😄.<br><br>
-      Il faut acheter des Robux uniquement via la société officielle.<br>
-      Les générateurs de Robux sont des arnaques ou des virus.<br>
-      Seul Microsoft Rewards peut offrir des Robux gratuits.<br>
-      Ne fais pas confiance aux faux générateurs ou aux promesses sur YouTube.
-    </p>
-  </div>
-
+<div id="app">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Roblox_Icon.svg" alt="Logo Robux" class="logo" />
+  <!-- Contenu dynamique ici -->
 </div>
 
+<canvas id="confetti-canvas"></canvas>
+
 <script>
-  // Gestion des pages
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => {
-      if (p.id === id) {
-        p.classList.add('active');
-      } else {
-        p.classList.remove('active');
+  const app = document.getElementById('app');
+
+  // Sons simples (clic et pop)
+  const audioClick = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAIA+AAABAAgAZGF0YQAAAAA=');
+  const audioPop = new Audio('data:audio/wav;base64,UklGRhgAAABXQVZFZm10IBAAAAABAAEAgD4AAIA+AAABAAgAZGF0YQAAAAA=');
+
+  let state = {
+    pseudo: '',
+    robuxAmount: 0,
+    humanVerified: false,
+  };
+
+  // Emoji qui rigole
+  const emojiLaugh = '😄';
+
+  // Fonction pour jouer son clic (très court)
+  function playClick() {
+    audioClick.currentTime = 0;
+    audioClick.play().catch(() => {});
+  }
+  function playPop() {
+    audioPop.currentTime = 0;
+    audioPop.play().catch(() => {});
+  }
+
+  // Confettis - simple canvas
+  const confettiCanvas = document.getElementById('confetti-canvas');
+  const ctx = confettiCanvas.getContext('2d');
+  let confettiPieces = [];
+
+  function resizeCanvas() {
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  class ConfettiPiece {
+    constructor() {
+      this.x = Math.random() * confettiCanvas.width;
+      this.y = Math.random() * confettiCanvas.height - confettiCanvas.height;
+      this.size = 8 + Math.random() * 10;
+      this.speed = 2 + Math.random() * 3;
+      this.rotation = Math.random() * 360;
+      this.rotationSpeed = (Math.random() - 0.5) * 10;
+      this.color = `hsl(${Math.random() * 360}, 80%, 70%)`;
+      this.opacity = 1;
+    }
+    update() {
+      this.y += this.speed;
+      this.rotation += this.rotationSpeed;
+      if (this.y > confettiCanvas.height) {
+        this.y = -this.size;
+        this.x = Math.random() * confettiCanvas.width;
       }
+    }
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation * Math.PI / 180);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = this.opacity;
+      ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+      ctx.restore();
+    }
+  }
+
+  function createConfetti() {
+    for(let i=0; i<120; i++) {
+      confettiPieces.push(new ConfettiPiece());
+    }
+  }
+  function animateConfetti() {
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    confettiPieces.forEach(piece => {
+      piece.update();
+      piece.draw();
     });
+    requestAnimationFrame(animateConfetti);
   }
 
-  // Page 1 : pseudo
-  const pseudoInput = document.getElementById('pseudo-input');
-  const next1 = document.getElementById('next1');
-  pseudoInput.addEventListener('input', () => {
-    next1.disabled = pseudoInput.value.trim().length < 3;
-  });
-  next1.addEventListener('click', () => {
-    showPage('page2');
-    robuxInput.value = '';
-    next2.disabled = true;
-  });
+  createConfetti();
+  animateConfetti();
 
-  // Page 2 : nombre de robux
-  const robuxInput = document.getElementById('robux-input');
-  const next2 = document.getElementById('next2');
-  robuxInput.addEventListener('input', () => {
-    let val = parseInt(robuxInput.value);
-    if (val >= 1 && val <= 10000) {
-      next2.disabled = false;
-    } else {
-      next2.disabled = true;
-    }
-  });
-  next2.addEventListener('click', () => {
-    showPage('page3');
-  });
-
-  // Page 3 : vérification humaine
-  const humanYes = document.getElementById('human-yes');
-  humanYes.addEventListener('click', () => {
-    showPage('page4');
-    startRobuxAnimation();
-  });
-
-  // Page 4 : animation Robux et finalisation
-  const robuxFinalAmount = document.getElementById('robux-final-amount');
-  const robuxContainer = document.getElementById('robux-container');
-  const next4 = document.getElementById('next4');
-
-  function startRobuxAnimation() {
-    robuxFinalAmount.textContent = robuxInput.value;
-    robuxContainer.innerHTML = ''; // reset
-
-    const count = Math.min(50, parseInt(robuxInput.value)); // max 50 icônes pour pas trop charger
-    for (let i = 0; i < count; i++) {
-      const span = document.createElement('span');
-      span.textContent = '🪙';  // pièce emoji (remplace par 💰 si tu préfères)
-      span.className = 'robux-icon';
-      // Position aléatoire horizontale
-      span.style.left = (Math.random() * 320) + 'px';
-      // Delai d'animation différent
-      span.style.animationDelay = (i * 0.06) + 's';
-      robuxContainer.appendChild(span);
-    }
+  // Utilitaire création bouton stylé
+  function createButton(text, onClick) {
+    const btn = document.createElement('button');
+    btn.textContent = text;
+    btn.onclick = () => {
+      playClick();
+      onClick();
+    };
+    return btn;
   }
 
-  next4.addEventListener('click', () => {
-    showPage('page5');
-  });
-</script>
+  // Pages
+  function pagePseudo() {
+    app.innerHTML = `
+      <div class="centered">
+        <div class="emoji">${emojiLaugh}</div>
+        <h1>Mettez votre pseudo</h1>
+        <input type="text" id="pseudoInput" placeholder="Ex: roi_des_robux" maxlength="20" autocomplete="off" />
+      </div>
+    `;
+    const input = document.getElementById('pseudoInput');
+    const btnNext = createButton('Suivant', () => {
+      const val = input.value.trim();
+      if(val.length < 3) {
+        alert('Merci de mettre un pseudo d’au moins 3 caractères 😅');
+        return;
+      }
+      state.pseudo = val;
+      pageRobuxAmount();
+    });
+    app.appendChild(btnNext);
+    input.focus();
+  }
 
-</body>
-</html>
-
+  function pageRobuxAmount() {
+    app.innerHTML = `
+     
