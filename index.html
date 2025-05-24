@@ -1,240 +1,267 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Générateur Robux</title>
-  <style>
-    html, body {
-      overflow-x: hidden;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ultimate Robux Generator - Niveau ULTIME 🐐</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+  /* RESET & BASE */
+  * {
+    box-sizing: border-box;
+    user-select: none;
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    background: radial-gradient(circle at center, #0a0a0a 30%, #111 90%);
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ffcc;
+    overflow-x: hidden;
+  }
+  #app {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* TITRE GLITCH */
+  h1 {
+    font-size: 2.8rem;
+    color: #FFD700;
+    text-align: center;
+    position: relative;
+    margin-bottom: 25px;
+    animation: glitch 1.5s infinite;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 10px #FFD700,
+      0 0 20px #FFD700,
+      0 0 40px #FFA500;
+  }
+
+  @keyframes glitch {
+    0%, 100% { text-shadow: 
+      0 0 5px #fff,
+      0 0 10px #FFD700,
+      0 0 20px #FFD700,
+      0 0 40px #FFA500;
     }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #001f3f;
-      color: white;
-      overflow: hidden;
-      position: relative;
+    20% {
+      text-shadow:
+        -2px 0 red,
+        2px 2px #00ffcc,
+        -2px 2px #ffa500;
     }
-    .page {
-      display: none;
-      text-align: center;
-      padding: 50px;
-      transition: transform 0.5s ease, opacity 0.5s ease;
+    40% {
+      text-shadow:
+        2px -2px #00ffcc,
+        -2px 2px #ffa500,
+        2px 2px red;
     }
-    .page.active {
-      display: block;
-      animation: pulse 1.5s ease;
+    60% {
+      text-shadow:
+        -2px -2px #ffa500,
+        2px 2px #00ffcc,
+        -2px 2px red;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(0.97); }
-      100% { transform: scale(1); }
+    80% {
+      text-shadow:
+        2px 0 #00ffcc,
+        -2px 2px #FFD700,
+        2px -2px red;
     }
-    input[type="text"] {
-      padding: 15px;
-      border-radius: 25px;
-      border: 3px solid gold;
-      width: 400px;
-      font-size: 20px;
-      margin-top: 20px;
+  }
+
+  /* SAC & BORDURES DORÉES */
+  .gold-border {
+    border: 2.5px solid #FFD700;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #FFD700aa;
+  }
+
+  /* SAC D'ARGENT ANIMÉ */
+  .money-bag {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: pulseBag 2s ease-in-out infinite;
+    user-select: none;
+  }
+  @keyframes pulseBag {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #FFD700); }
+    50% { transform: scale(0.85); filter: drop-shadow(0 0 15px #FFD700); }
+  }
+
+  /* INPUT PSEUDO */
+  input#pseudo {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.4rem;
+    color: #0a0a0a;
+    background: #f9f9f9;
+    border: 3px solid #FFD700;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #FFD70088 inset;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-bottom: 12px;
+    transition: border-color 0.3s ease;
+  }
+  input#pseudo:focus {
+    outline: none;
+    border-color: #FFEA00;
+    box-shadow: 0 0 35px #FFD700cc inset;
+  }
+
+  /* MESSAGE D'ERREUR */
+  .error-message {
+    color: #ff4444;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-align: center;
+    min-height: 1.2rem;
+  }
+
+  /* BOUTONS */
+  button {
+    background: linear-gradient(45deg, #FFD700, #FFAA00);
+    border: none;
+    color: #0a0a0a;
+    font-weight: 900;
+    font-size: 1.4rem;
+    padding: 15px 0;
+    width: 100%;
+    border-radius: 15px;
+    box-shadow:
+      0 0 15px #FFD700,
+      0 4px 15px #FFA500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    font-family: 'Share Tech Mono', monospace;
+  }
+  button:hover {
+    filter: brightness(1.2);
+    box-shadow:
+      0 0 30px #FFD700,
+      0 6px 20px #FFB300;
+    transform: scale(1.05);
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+
+  /* FINGERPRINT SCAN */
+  .fingerprint-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .fingerprint {
+    width: 110px;
+    height: 150px;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Fingerprint_picture.svg/512px-Fingerprint_picture.svg.png') no-repeat center center;
+    background-size: contain;
+    filter: drop-shadow(0 0 10px #FFD700);
+    animation: pulseFingerprint 2.5s ease-in-out infinite;
+    margin-bottom: 18px;
+  }
+  @keyframes pulseFingerprint {
+    0%, 100% { filter: drop-shadow(0 0 10px #FFD700); }
+    50% { filter: drop-shadow(0 0 30px #FFEB3B); }
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    width: 100%;
+    height: 20px;
+    border-radius: 12px;
+    background: #222;
+    box-shadow: inset 0 0 6px #000;
+    overflow: hidden;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  .progress-bar > div {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #FFD700, #FFEA00);
+    box-shadow:
+      0 0 10px #FFD700,
+      0 0 20px #FFEA00;
+    border-radius: 12px;
+    transition: width 0.4s ease-in-out;
+  }
+
+  /* MESSAGE FINAL */
+  .final-message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #FFD700;
+    font-weight: 700;
+    min-height: 2.4rem;
+    text-shadow: 0 0 15px #FFEA00;
+  }
+
+  /* AVERTISSEMENT */
+  .warning {
+    margin-top: 20px;
+    color: #FFAA00;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 0 5px #FFAA00;
+  }
+  .warning span {
+    font-size: 1.4rem;
+  }
+
+  /* PAGE HIDDEN */
+  .hidden {
+    display: none !important;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 460px) {
+    #app {
+      padding: 20px 15px;
+      max-width: 100vw;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    input#pseudo {
+      font-size: 1.1rem;
     }
     button {
-      padding: 15px 30px;
-      border: none;
-      background-color: #FFD700;
-      color: black;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 18px;
-      margin-top: 20px;
+      font-size: 1.2rem;
+      padding: 12px 0;
     }
-    select {
-      font-size: 24px;
-      padding: 10px;
-      border-radius: 15px;
-      border: 2px solid gold;
-      margin-top: 20px;
-    }
-    #confettis, #robuxLogos {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 10;
-    }
-    #logo {
-      width: 100px;
-      margin: 20px auto;
-      display: block;
-    }
-    .avertissement {
-      background-color: #222;
-      border: 3px solid gold;
-      padding: 30px;
-      margin-top: 30px;
-      border-radius: 15px;
-      color: gold;
-      font-size: 20px;
-    }
-    #nomFinal {
-      color: gold;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    .sac-anim {
-      font-size: 50px;
-      animation: sacPulse 1s infinite;
-      margin: 20px auto;
-      color: gold;
-    }
-    .emoji-argent {
-      font-size: 60px;
-      color: gold;
-      margin-bottom: 20px;
-    }
-    .info-bar {
-      background: #222;
-      border: 2px solid gold;
-      padding: 15px;
-      margin-top: 30px;
-      border-radius: 12px;
-      color: gold;
-      font-size: 18px;
-      display: inline-block;
-    }
-    @keyframes sacPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(0.8); }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-<img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/75/Roblox_Logo_2022.svg" alt="Logo Roblox">
-<div class="emoji-argent">💰</div>
+<div id="app">
+  <h1>💰 Ultimate Robux Generator</h1>
 
-<div id="confettis"></div>
-<div id="robuxLogos"></div>
-
-<div class="page active" id="page1">
-  <h1>Bienvenue !</h1>
-  <p>Entrez votre pseudo :</p>
-  <input type="text" id="pseudo" placeholder="Ex : Kevin92">
-  <br>
-  <button onclick="validerPseudo()">Suivant</button>
-</div>
-
-<div class="page" id="page2">
-  <h2>Choisissez le nombre de Robux :</h2>
-  <select id="robux">
-    <option value="800">800</option>
-    <option value="1700">1700</option>
-    <option value="4500">4500</option>
-  </select>
-  <br>
-  <button onclick="suivantPage(3)">Suivant</button>
-</div>
-
-<div class="page" id="page3">
-  <h2>Êtes-vous humain ?</h2>
-  <button onclick="suivantPage(4)">Oui</button>
-</div>
-
-<div class="page" id="page4">
-  <h2>Vos Robux sont en train de se générer...</h2>
-  <div id="loading">Chargement...</div>
-  <div class="sac-anim">💰</div>
-  <div class="info-bar">⚠️ Appuyez sur Suivant pour finaliser</div>
-  <br>
-  <button onclick="suivantPage(5)">Suivant</button>
-</div>
-
-<div class="page" id="page5">
-  <h2>Avertissement</h2>
-  <div class="avertissement">
-    ⚠️ Attention !<br><br>
-    Ne faites jamais confiance aux générateurs de Robux !<br>
-    Ce genre de promesse est souvent une <strong>arnaque</strong>, un <strong>virus</strong>, ou une <strong>tentative de vol d'identité</strong>.<br><br>
-    Beaucoup de vidéos sur YouTube promettent des Robux gratuits mais <strong>seul Microsoft ou Roblox Corporation</strong> peuvent gérer vos achats !<br><br>
-    Soyez prudents ! 💡
+  <!-- PAGE 1: Entrée Pseudo + Validation -->
+  <div id="page1" class="page gold-border">
+    <div class="money-bag">💰</div>
+    <input type="text" id="pseudo" placeholder="Tape ton pseudo Roblox ici..." autocomplete="off" />
+    <div class="error-message" id="error1"></div>
+    <button id="btnStart">▶ DÉMARRER</button>
   </div>
-  <p>Merci <span id="nomFinal"></span> !</p>
-  <button onclick="recommencer()">Recommencer</button>
-</div>
 
-<script>
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page' + id).classList.add('active');
-}
-
-function validerPseudo() {
-  const pseudo = document.getElementById("pseudo").value.trim();
-  const hasLetters = /[a-zA-Z]/.test(pseudo);
-  const hasDigits = /[0-9]/.test(pseudo);
-
-  showChargement(() => {
-    if (pseudo.length < 3 || (!hasLetters || !hasDigits)) {
-      alert("Pseudo invalide : il doit contenir lettres + chiffres.");
-      return;
-    }
-    document.getElementById("nomFinal").innerText = pseudo;
-    showPage(2);
-  });
-}
-
-function showChargement(callback) {
-  const loadingDiv = document.getElementById("loading");
-  if (loadingDiv) loadingDiv.innerText = "Chargement...";
-  setTimeout(callback, 1500);
-}
-
-function suivantPage(num) {
-  showChargement(() => {
-    if (num === 5) {
-      lancerEffetsFinaux();
-    }
-    showPage(num);
-  });
-}
-
-function recommencer() {
-  location.reload();
-}
-
-function lancerEffetsFinaux() {
-  const confettis = document.getElementById("confettis");
-  confettis.innerHTML = "";
-  for (let i = 0; i < 50; i++) {
-    const c = document.createElement("div");
-    c.style.position = "absolute";
-    c.style.width = "10px";
-    c.style.height = "10px";
-    c.style.background = `hsl(${Math.random()*360}, 100%, 50%)`;
-    c.style.top = Math.random() * 100 + "%";
-    c.style.left = Math.random() * 100 + "%";
-    c.style.borderRadius = "50%";
-    c.style.animation = `fall ${2 + Math.random() * 3}s linear`;
-    confettis.appendChild(c);
-  }
-
-  const logos = document.getElementById("robuxLogos");
-  logos.innerHTML = "";
-  for (let i = 0; i < 10; i++) {
-    const img = document.createElement("img");
-    img.src = "https://upload.wikimedia.org/wikipedia/commons/3/30/Robux_2019_Logo.png";
-    img.style.width = "40px";
-    img.style.position = "absolute";
-    img.style.top = "50%";
-    img.style.left = "50%";
-    img.style.transform = `translate(-50%, -50%) translate(${Math.random()*200-100}px, ${Math.random()*200-100}px)`;
-    img.style.transition = "all 2s ease";
-    logos.appendChild(img);
-  }
-}
-</script>
-
-</body>
-</html>
+  <!-- PAGE 2: Empreinte digitale + validation
