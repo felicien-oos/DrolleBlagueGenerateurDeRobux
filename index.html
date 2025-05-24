@@ -4,12 +4,16 @@
   <meta charset="UTF-8">
   <title>Générateur Robux</title>
   <style>
+    html, body {
+      overflow-x: hidden;
+    }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #001f3f;
       color: white;
       overflow: hidden;
+      position: relative;
     }
     .page {
       display: none;
@@ -36,8 +40,8 @@
     button {
       padding: 15px 30px;
       border: none;
-      background-color: #4CAF50;
-      color: white;
+      background-color: #FFD700;
+      color: black;
       border-radius: 25px;
       cursor: pointer;
       font-size: 16px;
@@ -56,6 +60,30 @@
       width: 100px;
       margin: 20px auto;
       display: block;
+    }
+    .avertissement {
+      background-color: #222;
+      border: 3px solid gold;
+      padding: 30px;
+      margin-top: 30px;
+      border-radius: 15px;
+      color: gold;
+      font-size: 20px;
+    }
+    #nomFinal {
+      color: gold;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .sac-anim {
+      font-size: 50px;
+      animation: sacPulse 1s infinite;
+      margin: 20px auto;
+      color: gold;
+    }
+    @keyframes sacPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(0.8); }
     }
   </style>
 </head>
@@ -93,13 +121,20 @@
 <div class="page" id="page4">
   <p>Vos Robux sont en train de se générer...</p>
   <div id="loading">Chargement...</div>
+  <div class="sac-anim">💰</div>
   <br>
   <button onclick="suivantPage(5)">Suivant</button>
 </div>
 
 <div class="page" id="page5">
   <h2>Avertissement</h2>
-  <p>Ceci est un générateur fictif. Aucun Robux ne sera ajouté réellement.</p>
+  <div class="avertissement">
+    ⚠️ Attention !<br><br>
+    Ne faites jamais confiance aux générateurs de Robux !<br>
+    Ce genre de promesse est souvent une <strong>arnaque</strong>, un <strong>virus</strong>, ou une <strong>tentative de vol d'identité</strong>.<br><br>
+    Beaucoup de vidéos sur YouTube promettent des Robux gratuits mais <strong>seul Microsoft ou Roblox Corporation</strong> peuvent gérer vos achats !<br><br>
+    Soyez prudents ! 💡
+  </div>
   <p>Merci <span id="nomFinal"></span> !</p>
   <button onclick="recommencer()">Recommencer</button>
 </div>
@@ -116,8 +151,8 @@ function validerPseudo() {
   const hasDigits = /[0-9]/.test(pseudo);
 
   showChargement(() => {
-    if (pseudo.length < 3 || !hasLetters || !hasDigits) {
-      alert("Pseudo invalide : lettres + chiffres requis.");
+    if (pseudo.length < 3 || (!hasLetters || !hasDigits)) {
+      alert("Pseudo invalide : il doit contenir lettres + chiffres.");
       return;
     }
     document.getElementById("nomFinal").innerText = pseudo;
@@ -145,7 +180,6 @@ function recommencer() {
 }
 
 function lancerEffetsFinaux() {
-  // Confettis simulés
   const confettis = document.getElementById("confettis");
   confettis.innerHTML = "";
   for (let i = 0; i < 50; i++) {
@@ -161,7 +195,6 @@ function lancerEffetsFinaux() {
     confettis.appendChild(c);
   }
 
-  // Logos Robux qui sortent du centre
   const logos = document.getElementById("robuxLogos");
   logos.innerHTML = "";
   for (let i = 0; i < 10; i++) {
