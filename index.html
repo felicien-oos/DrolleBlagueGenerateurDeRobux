@@ -1,260 +1,138 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Générateur de Robux Troll</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #001f3f, #003366);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      animation: pulseBody 4s infinite ease-in-out;
-      position: relative;
-    }
-    @keyframes pulseBody {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(0.98);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-    .container {
-      width: 100%;
-      max-width: 600px;
-      padding: 40px;
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-      text-align: center;
-      animation: fadeIn 0.5s ease forwards;
-      position: relative;
-      overflow: visible;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    .page {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .active {
-      display: flex;
-    }
-    .input-large {
-      padding: 20px;
-      font-size: 2em;
-      width: 100%;
-      border-radius: 10px;
-      border: none;
-      margin-top: 20px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-align: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    button {
-      margin-top: 30px;
-      padding: 15px 40px;
-      font-size: 1.5em;
-      border: none;
-      border-radius: 8px;
-      background-color: #00aced;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      user-select: none;
-      font-weight: 700;
-    }
-    button:hover {
-      background-color: #0084b4;
-    }
-    .loading {
-      font-size: 2em;
-      margin-top: 30px;
-      display: none;
-    }
-    .robux-number {
-      font-size: 5em;
-      font-weight: bold;
-      margin: 20px;
-      position: relative;
-      z-index: 10;
-      color: #ffdd00;
-      text-shadow:
-        0 0 10px #ffdd00,
-        0 0 20px #ffdd00,
-        0 0 30px #ffa500,
-        0 0 40px #ffa500,
-        0 0 50px #ffa500,
-        0 0 60px #ffa500;
-    }
-    .warning {
-      color: yellow;
-      font-size: 1.2em;
-      margin-top: 20px;
-      z-index: 10;
-      position: relative;
-    }
-    .confetti-container {
-      position: absolute;
-      top: 10px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 20px;
-      font-size: 2em;
-      pointer-events: none;
-      user-select: none;
-    }
-    .logo-robot {
-      font-size: 5em;
-      margin-bottom: 10px;
-      animation: pulseBody 4s infinite ease-in-out;
-      user-select: none;
-    }
-
-    /* Confetti animation */
-    .confetti-piece {
-      position: fixed;
-      width: 15px;
-      height: 15px;
-      background-color: #ffdd00;
-      opacity: 0.9;
-      top: -20px;
-      z-index: 9999;
-      pointer-events: none;
-      border-radius: 3px;
-      animation-name: fallConfetti;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-    @keyframes fallConfetti {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    /* Robux emoji burst */
-    .robux-burst {
-      position: absolute;
-      font-size: 2.5em;
-      animation: burstUp 1.5s ease forwards;
-      pointer-events: none;
-      user-select: none;
-      color: #00d8ff;
-      text-shadow: 0 0 5px #00d8ff;
-    }
-    @keyframes burstUp {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-150px) scale(1.5);
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Générateur de Robux Troll</title>
+<style>
+  body {
+    margin:0; padding:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #001f3f, #003366);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    background: rgba(0,0,0,0.4);
+    padding: 30px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+  }
+  .page {
+    display: none;
+  }
+  .page.active {
+    display: block;
+  }
+  .logo {
+    font-size: 64px;
+    margin-bottom: 10px;
+    user-select: none;
+  }
+  input, select, button {
+    font-size: 1.2em;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: #00aced;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover {
+    background-color: #0084b4;
+  }
+  #robuxDisplay {
+    font-size: 3em;
+    margin: 20px 0;
+    color: #ffdd00;
+    text-shadow: 0 0 10px #ffdd00;
+  }
+</style>
 </head>
 <body>
   <div class="container">
-    <div class="logo-robot">🤖</div>
+    <div class="logo">🤖</div>
 
     <div class="page active" id="page1">
-      <h1>Générateur de Robux Troll 🤣</h1>
-      <input
-        type="text"
-        placeholder="😆 Mettez votre pseudo (ex: roi_des_robux)"
-        class="input-large"
-        id="username"
-        autocomplete="off"
-        spellcheck="false"
-      />
-      <button onclick="nextPage(2)">Suivant</button>
+      <h2>Bienvenue</h2>
+      <input id="username" type="text" placeholder="Ton pseudo (ex: roi_des_robux)" autocomplete="off" />
+      <button onclick="goToPage(2)">Suivant</button>
     </div>
 
     <div class="page" id="page2">
-      <h1>Choisis ton nombre de Robux</h1>
-      <select id="robux" class="input-large">
+      <h2>Choisis ton nombre de Robux</h2>
+      <select id="robux">
         <option value="100">100</option>
         <option value="500">500</option>
         <option value="1000">1000</option>
         <option value="10000">10 000</option>
       </select>
-      <button onclick="nextPage(3)">Suivant</button>
+      <button onclick="goToPage(3)">Suivant</button>
     </div>
 
     <div class="page" id="page3">
-      <h1>Vérification Humaine</h1>
-      <p style="font-size:1.5em;">Est-ce que vous êtes un humain ?</p>
-      <button onclick="nextPage(4)">Oui</button>
+      <h2>Vérification</h2>
+      <p>Êtes-vous un humain ?</p>
+      <button onclick="goToPage(4)">Oui</button>
     </div>
 
     <div class="page" id="page4">
-      <h1>Félicitations 🎉</h1>
-      <div class="robux-number" id="robuxDisplay"></div>
-      <div class="warning">⚠️ Vous devez appuyer sur le bouton Suivant pour finaliser.</div>
-      <button onclick="nextPage(5)">Suivant</button>
+      <h2>Félicitations 🎉</h2>
+      <div id="robuxDisplay"></div>
+      <button onclick="goToPage(5)">Suivant</button>
     </div>
 
     <div class="page" id="page5">
-      <h1>⚠️ AVERTISSEMENT ⚠️</h1>
-      <p style="font-size:1.2em; line-height:1.5;">
-        Ce site est juste pour rigoler avec vos amis.<br />
-        Ne croyez pas aux générateurs de Robux.<br />
-        Ce sont des arnaques ou des virus.<br />
-        Seul <strong>Microsoft Rewards</strong> peut donner des Robux gratuits.<br />
-        🚫 Ne faites pas confiance aux promesses sur YouTube.
+      <h2>Avertissement ⚠️</h2>
+      <p>
+        Ce site est un troll.<br>
+        Les générateurs de Robux sont des arnaques.<br>
+        Seul Microsoft Rewards donne des Robux gratuitement.<br>
+        Ne faites pas confiance aux promesses sur YouTube.
       </p>
-      <button onclick="restart()">🔁 Recommencer</button>
+      <button onclick="restart()">Recommencer</button>
     </div>
-
-    <div class="loading" id="loading">Chargement...</div>
   </div>
 
-  <script>
-    const container = document.querySelector('.container');
-    const robuxDisplay = document.getElementById('robuxDisplay');
-    const loading = document.getElementById('loading');
+<script>
+  function goToPage(pageNumber) {
+    // Valide le pseudo si page 1 -> 2
+    if(pageNumber === 2) {
+      const username = document.getElementById('username').value.trim();
+      if(!username) {
+        alert("Merci d'entrer un pseudo !");
+        return;
+      }
+    }
+    // Cache toutes les pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // Montre la bonne page
+    const page = document.getElementById('page' + pageNumber);
+    page.classList.add('active');
 
-    // Confetti variables
-    let confettis = [];
+    // Si page 4, affiche le nombre de robux choisi
+    if(pageNumber === 4) {
+      const robux = document.getElementById('robux').value;
+      document.getElementById('robuxDisplay').textContent = robux + " 💸";
+    }
+  }
 
-    function createConfetti() {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti-piece');
-      confetti.style.left = Math.random() * window.innerWidth + 'px';
-      confetti.style.animationDuration = 3000 + Math.random() * 2000 + 'ms';
-      confetti.style.backgroundColor =
-        ['#ffdd00', '#ffa500',
-```
+  function restart() {
+    document.getElementById('username').value = "";
+    document.getElementById('robux').value = "100";
+    goToPage(1);
+  }
+</script>
+</body>
+</html>
+
