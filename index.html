@@ -1,10 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Générateur de Robux Troll</title>
+<title>Générateur de Robux Troll - Masterclass</title>
 <style>
+  /* Animations confettis */
+  @keyframes fallConfetti {
+    0% { transform: translateY(-30px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+  /* Animations Robux pop */
+  @keyframes popRobux {
+    0% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+    100% { opacity: 0; transform: translateY(-80px) scale(1.5) rotate(720deg); }
+  }
+  /* Animation shrink-grow container */
+  @keyframes shrinkGrow {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.85); }
+    100% { transform: scale(1); }
+  }
+  /* Points qui clignotent */
+  @keyframes blinkDots {
+    0%, 20% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+  }
+
+  /* Styles généraux */
   body {
     margin:0; padding:0;
     font-family: Arial, sans-serif;
@@ -14,6 +39,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
   }
   .container {
     background: rgba(0,0,0,0.4);
@@ -21,6 +47,8 @@
     border-radius: 20px;
     width: 320px;
     text-align: center;
+    position: relative;
+    animation: shrinkGrow 1.2s ease forwards;
   }
   .page {
     display: none;
@@ -57,82 +85,147 @@
     color: #ffdd00;
     text-shadow: 0 0 10px #ffdd00;
   }
+  #loading {
+    font-size: 1.5em;
+    margin-top: 15px;
+    color: #ffdd00;
+    display: none;
+    user-select: none;
+  }
+  /* Confettis */
+  .confetti {
+    position: fixed;
+    top: -30px;
+    width: 12px;
+    height: 12px;
+    background-color: #ffdd00;
+    opacity: 0.9;
+    border-radius: 3px;
+    animation: fallConfetti 3s linear infinite;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  /* Robux logos */
+  .robux-icon {
+    position: fixed;
+    bottom: 50px;
+    font-size: 20px;
+    color: #ffdd00;
+    opacity: 0.9;
+    animation: popRobux 2s ease forwards;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1000;
+  }
+  /* Animation points de chargement */
+  .dots span {
+    animation: blinkDots 1.4s infinite;
+  }
+  .dots span:nth-child(1) { animation-delay: 0s; }
+  .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  /* Message d'erreur */
+  #errorMsg {
+    color: #f44;
+    margin-top: 10px;
+    display: none;
+  }
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">🤖</div>
 
-    <div class="page active" id="page1">
-      <h2>Bienvenue</h2>
-      <input id="username" type="text" placeholder="Ton pseudo (ex: roi_des_robux)" autocomplete="off" />
-      <button onclick="goToPage(2)">Suivant</button>
-    </div>
+<div class="container" id="container">
+  <div class="logo">🤖</div>
 
-    <div class="page" id="page2">
-      <h2>Choisis ton nombre de Robux</h2>
-      <select id="robux">
-        <option value="100">100</option>
-        <option value="500">500</option>
-        <option value="1000">1000</option>
-        <option value="10000">10 000</option>
-      </select>
-      <button onclick="goToPage(3)">Suivant</button>
-    </div>
-
-    <div class="page" id="page3">
-      <h2>Vérification</h2>
-      <p>Êtes-vous un humain ?</p>
-      <button onclick="goToPage(4)">Oui</button>
-    </div>
-
-    <div class="page" id="page4">
-      <h2>Félicitations 🎉</h2>
-      <div id="robuxDisplay"></div>
-      <button onclick="goToPage(5)">Suivant</button>
-    </div>
-
-    <div class="page" id="page5">
-      <h2>Avertissement ⚠️</h2>
-      <p>
-        Ce site est un troll.<br>
-        Les générateurs de Robux sont des arnaques.<br>
-        Seul Microsoft Rewards donne des Robux gratuitement.<br>
-        Ne faites pas confiance aux promesses sur YouTube.
-      </p>
-      <button onclick="restart()">Recommencer</button>
-    </div>
+  <!-- PAGE 1 : saisie pseudo -->
+  <div class="page active" id="page1">
+    <h2>Bienvenue</h2>
+    <input id="username" type="text" placeholder="Ton pseudo (ex: Forward666)" autocomplete="off" />
+    <button onclick="validatePseudo()">Suivant</button>
+    <p id="errorMsg"></p>
   </div>
 
+  <!-- PAGE 2 : recherche du pseudo -->
+  <div class="page" id="page2">
+    <h2>Recherche du compte</h2>
+    <p id="searchText"></p>
+    <p class="dots"><span>.</span><span>.</span><span>.</span></p>
+  </div>
+
+  <!-- PAGE 3 : Choix du nombre de robux -->
+  <div class="page" id="page3">
+    <h2>Choisis ton nombre de Robux</h2>
+    <select id="robux">
+      <option value="100">100</option>
+      <option value="500">500</option>
+      <option value="1000">1000</option>
+      <option value="10000">10 000</option>
+    </select>
+    <button onclick="changePage(4)">Suivant</button>
+  </div>
+
+  <!-- PAGE 4 : Validation -->
+  <div class="page" id="page4">
+    <h2>Vérification</h2>
+    <p>Êtes-vous un humain ?</p>
+    <button onclick="changePage(5)">Oui</button>
+  </div>
+
+  <!-- PAGE 5 : Affichage robux -->
+  <div class="page" id="page5">
+    <h2>Félicitations 🎉</h2>
+    <div id="robuxDisplay"></div>
+    <button onclick="changePage(6)">Suivant</button>
+  </div>
+
+  <!-- PAGE 6 : Avertissement -->
+  <div class="page" id="page6">
+    <h2>Avertissement ⚠️</h2>
+    <p>
+      Ce site est un troll.<br>
+      Les générateurs de Robux sont des arnaques.<br>
+      Seul Microsoft Rewards donne des Robux gratuitement.<br>
+      Ne faites pas confiance aux promesses sur YouTube.
+    </p>
+    <button onclick="restart()">Recommencer</button>
+  </div>
+</div>
+
 <script>
-  function goToPage(pageNumber) {
-    // Valide le pseudo si page 1 -> 2
-    if(pageNumber === 2) {
-      const username = document.getElementById('username').value.trim();
-      if(!username) {
-        alert("Merci d'entrer un pseudo !");
-        return;
-      }
-    }
-    // Cache toutes les pages
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    // Montre la bonne page
-    const page = document.getElementById('page' + pageNumber);
-    page.classList.add('active');
+  const container = document.getElementById('container');
+  const pages = document.querySelectorAll('.page');
+  const errorMsg = document.getElementById('errorMsg');
+  const searchText = document.getElementById('searchText');
 
-    // Si page 4, affiche le nombre de robux choisi
-    if(pageNumber === 4) {
-      const robux = document.getElementById('robux').value;
-      document.getElementById('robuxDisplay').textContent = robux + " 💸";
-    }
+  // Validation pseudo: doit contenir au moins une lettre ET un chiffre
+  function isPseudoValid(pseudo) {
+    if(!pseudo) return false;
+    const hasLetter = /[a-zA-Z]/.test(pseudo);
+    const hasDigit = /[0-9]/.test(pseudo);
+    return hasLetter && hasDigit;
   }
 
-  function restart() {
-    document.getElementById('username').value = "";
-    document.getElementById('robux').value = "100";
-    goToPage(1);
+  // Animation shrink/grow du container (retourne Promise)
+  function animateContainer() {
+    return new Promise(resolve => {
+      container.style.animation = 'shrinkGrow 1.2s ease forwards';
+      container.addEventListener('animationend', () => {
+        container.style.animation = '';
+        resolve();
+      }, { once: true });
+    });
   }
-</script>
-</body>
-</html>
+
+  // Affiche une page, cache les autres
+  function showPage(num) {
+    pages.forEach(p => p.classList.remove('active'));
+    const p = document.getElementById('page' + num);
+    if(p) p.classList.add('active');
+  }
+
+  async function validatePseudo() {
+    errorMsg.style.display = 'none';
+    let pseudo = document.get
+```
 
