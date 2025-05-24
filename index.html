@@ -120,4 +120,128 @@
     font-size: 2.4rem;
     color: #ffdd00;
     animation: blinkDots 1.4s infinite;
+    user-select: none;
+  }
+  .dots span:nth-child(1) { animation-delay: 0s; }
+  .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blinkDots {
+    0%, 20% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+  }
+  #robuxDisplay {
+    font-size: 3.2rem;
+    font-weight: 900;
+    color: #ffdd00;
+    text-shadow: 0 0 15px #ffdd00;
+    user-select: none;
+    margin-bottom: 25px;
+  }
+  @media (max-width: 450px) {
+    #container {
+      max-width: 90vw;
+      padding: 15px;
+    }
+    input[type=text], select, button {
+      font-size: 1.5rem;
+      padding: 12px 10px;
+      max-width: 100%;
+    }
+    #logo {
+      font-size: 60px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <div id="logo" title="Logo Robux Masterclass">💰</div>
+
+  <!-- Page 1 -->
+  <section class="page active" id="page1">
+    <h2>Bienvenue sur Robux Masterclass</h2>
+    <input id="username" type="text" placeholder="Tape ton pseudo (ex: Forward666)" autocomplete="off" spellcheck="false" />
+    <div id="errorMsg"></div>
+    <button id="btnNext1">Suivant</button>
+  </section>
+
+  <!-- Page 2 -->
+  <section class="page" id="page2">
+    <h2>Recherche du compte</h2>
+    <p id="searchText">Recherche en cours<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+  </section>
+
+  <!-- Page 3 -->
+  <section class="page" id="page3">
+    <h2>Choisis ton nombre de Robux</h2>
+    <select id="robuxSelect">
+      <option value="100">100</option>
+      <option value="500">500</option>
+      <option value="1000">1000</option>
+      <option value="10000">10 000</option>
+    </select>
+    <button id="btnNext3">Suivant</button>
+  </section>
+
+  <!-- Page 4 -->
+  <section class="page" id="page4">
+    <h2>Êtes-vous un humain ?</h2>
+    <button id="btnNext4">Oui</button>
+  </section>
+
+  <!-- Page 5 -->
+  <section class="page" id="page5">
+    <h2>Vos Robux sont en train de se générer</h2>
+    <p><span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+    <button id="btnNext5">Suivant</button>
+  </section>
+
+  <!-- Page 6 -->
+  <section class="page" id="page6">
+    <h2>Félicitations 🎉</h2>
+    <div id="robuxDisplay"></div>
+    <p>Attention : ceci est un troll, ne partagez jamais vos informations personnelles !</p>
+    <button id="btnRestart">Recommencer</button>
+  </section>
+</div>
+
+<script>
+  // Change la page affichée
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const page = document.getElementById(id);
+    if(page) page.classList.add('active');
+  }
+
+  // Validation pseudo : doit contenir au moins 1 lettre ET 1 chiffre
+  function isValidPseudo(str) {
+    const hasLetter = /[a-zA-Z]/.test(str);
+    const hasNumber = /\d/.test(str);
+    return hasLetter && hasNumber;
+  }
+
+  const btnNext1 = document.getElementById('btnNext1');
+  const btnNext3 = document.getElementById('btnNext3');
+  const btnNext4 = document.getElementById('btnNext4');
+  const btnNext5 = document.getElementById('btnNext5');
+  const btnRestart = document.getElementById('btnRestart');
+
+  const errorMsg = document.getElementById('errorMsg');
+  const usernameInput = document.getElementById('username');
+  const robuxSelect = document.getElementById('robuxSelect');
+  const robuxDisplay = document.getElementById('robuxDisplay');
+  const searchText = document.getElementById('searchText');
+
+  // Page 1 -> 2 (Validation pseudo avec mini chargement)
+  btnNext1.onclick = () => {
+    errorMsg.textContent = '';
+    const pseudo = usernameInput.value.trim();
+    if(pseudo.length === 0) {
+      errorMsg.textContent = 'Veuillez entrer un pseudo.';
+      return;
+    }
+
+    // On affiche la page recherche, puis on lance la validation après 1
 
