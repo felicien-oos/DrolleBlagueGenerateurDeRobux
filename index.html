@@ -33,9 +33,10 @@
     input[type="text"] {
       padding: 15px;
       border-radius: 25px;
-      border: 1px solid #ccc;
-      width: 300px;
-      font-size: 18px;
+      border: 3px solid gold;
+      width: 400px;
+      font-size: 20px;
+      margin-top: 20px;
     }
     button {
       padding: 15px 30px;
@@ -44,7 +45,14 @@
       color: black;
       border-radius: 25px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    select {
+      font-size: 24px;
+      padding: 10px;
+      border-radius: 15px;
+      border: 2px solid gold;
       margin-top: 20px;
     }
     #confettis, #robuxLogos {
@@ -81,6 +89,21 @@
       margin: 20px auto;
       color: gold;
     }
+    .emoji-argent {
+      font-size: 60px;
+      color: gold;
+      margin-bottom: 20px;
+    }
+    .info-bar {
+      background: #222;
+      border: 2px solid gold;
+      padding: 15px;
+      margin-top: 30px;
+      border-radius: 12px;
+      color: gold;
+      font-size: 18px;
+      display: inline-block;
+    }
     @keyframes sacPulse {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(0.8); }
@@ -90,6 +113,7 @@
 <body>
 
 <img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/75/Roblox_Logo_2022.svg" alt="Logo Roblox">
+<div class="emoji-argent">💰</div>
 
 <div id="confettis"></div>
 <div id="robuxLogos"></div>
@@ -103,7 +127,7 @@
 </div>
 
 <div class="page" id="page2">
-  <p>Choisissez le nombre de Robux :</p>
+  <h2>Choisissez le nombre de Robux :</h2>
   <select id="robux">
     <option value="800">800</option>
     <option value="1700">1700</option>
@@ -114,14 +138,15 @@
 </div>
 
 <div class="page" id="page3">
-  <p>Êtes-vous humain ?</p>
+  <h2>Êtes-vous humain ?</h2>
   <button onclick="suivantPage(4)">Oui</button>
 </div>
 
 <div class="page" id="page4">
-  <p>Vos Robux sont en train de se générer...</p>
+  <h2>Vos Robux sont en train de se générer...</h2>
   <div id="loading">Chargement...</div>
   <div class="sac-anim">💰</div>
+  <div class="info-bar">⚠️ Appuyez sur Suivant pour finaliser</div>
   <br>
   <button onclick="suivantPage(5)">Suivant</button>
 </div>
