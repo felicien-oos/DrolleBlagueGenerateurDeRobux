@@ -3,32 +3,26 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Générateur de Robux Troll - Masterclass</title>
+<title>Robux Masterclass - Générateur</title>
 <style>
-  /* Reset */
-  * {
-    box-sizing: border-box;
-  }
+  /* ... ton CSS inchangé de tout à l'heure ... */
+  * { box-sizing: border-box; }
   body, html {
     margin: 0; padding: 0; height: 100%;
-    background: #001f3f; /* bleu marine */
+    background: #001f3f;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     overflow-x: hidden;
-  }
-
-  /* Fond animé léger (doux mouvement de vagues en fond) */
-  @keyframes wave {
-    0% { background-position: 0 0; }
-    100% { background-position: 100% 0; }
   }
   body {
     background: linear-gradient(90deg, #001f3f 25%, #003366 50%, #001f3f 75%);
     background-size: 200% 100%;
     animation: wave 20s linear infinite;
   }
-
-  /* Container principal prenant toute la hauteur */
+  @keyframes wave {
+    0% { background-position: 0 0; }
+    100% { background-position: 200% 0; }
+  }
   #container {
     max-width: 400px;
     margin: auto;
@@ -37,31 +31,18 @@
     flex-direction: column;
     justify-content: flex-start;
     padding: 20px;
-    animation: shrinkGrow 1s ease forwards;
   }
-
-  /* Animation shrink-grow container */
-  @keyframes shrinkGrow {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.9); }
-    100% { transform: scale(1); }
-  }
-
-  /* Logo en haut */
   #logo {
     font-size: 80px;
+    margin: 0 auto 20px;
     user-select: none;
-    margin: 0 auto 20px auto;
-    animation: logoBounce 2s infinite ease-in-out;
     text-shadow: 0 0 12px #ffdd00;
-    cursor: default;
+    animation: logoBounce 2s infinite ease-in-out;
   }
   @keyframes logoBounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
-
-  /* Pages */
   .page {
     flex-grow: 1;
     display: none;
@@ -73,8 +54,6 @@
   .page.active {
     display: flex;
   }
-
-  /* Champs de texte */
   input[type=text] {
     font-size: 1.8rem;
     padding: 18px 12px;
@@ -88,8 +67,6 @@
     outline-offset: 3px;
     outline-color: #ffdd00;
   }
-
-  /* Select style */
   select {
     font-size: 1.6rem;
     padding: 15px 12px;
@@ -101,8 +78,6 @@
     margin-bottom: 20px;
     cursor: pointer;
   }
-
-  /* Boutons */
   button {
     font-size: 1.5rem;
     padding: 14px 0;
@@ -118,165 +93,31 @@
     transition: background 0.3s ease, transform 0.2s ease;
     user-select: none;
   }
-  button:hover:not(:disabled) {
+  button:hover {
     background: linear-gradient(90deg, #ffc700 0%, #ffdd00 100%);
     transform: scale(1.05);
   }
-  button:disabled {
-    background: #555;
-    cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
-  }
-
-  /* Message d'erreur */
   #errorMsg {
     color: #f44;
     font-weight: 700;
     margin-bottom: 15px;
     min-height: 24px;
   }
-
-  /* Texte titre */
   h2 {
     margin: 0 0 25px 0;
     font-weight: 700;
     font-size: 2rem;
     text-shadow: 0 0 6px #ffdd00;
   }
-
-  /* Texte info */
   p {
     font-size: 1.1rem;
     line-height: 1.4;
     margin: 0 0 20px 0;
     user-select: none;
   }
-
-  /* Animation points clignotants */
   .dots span {
     font-weight: 900;
     font-size: 2.4rem;
     color: #ffdd00;
     animation: blinkDots 1.4s infinite;
-    user-select: none;
-  }
-  .dots span:nth-child(1) { animation-delay: 0s; }
-  .dots span:nth-child(2) { animation-delay: 0.2s; }
-  .dots span:nth-child(3) { animation-delay: 0.4s; }
-
-  @keyframes blinkDots {
-    0%, 20% { opacity: 0.2; }
-    50% { opacity: 1; }
-    100% { opacity: 0.2; }
-  }
-
-  /* Affichage robux */
-  #robuxDisplay {
-    font-size: 3.2rem;
-    font-weight: 900;
-    color: #ffdd00;
-    text-shadow: 0 0 15px #ffdd00;
-    user-select: none;
-    margin-bottom: 25px;
-  }
-
-  /* Confettis */
-  .confetti {
-    position: fixed;
-    top: -15px;
-    width: 10px;
-    height: 15px;
-    background-color: #ffdd00;
-    opacity: 0.9;
-    border-radius: 2px;
-    animation: fallConfetti 3s linear infinite;
-    pointer-events: none;
-    z-index: 1000;
-  }
-  @keyframes fallConfetti {
-    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
-
-  /* Robux pièce */
-  .robux-icon {
-    position: fixed;
-    bottom: 80px;
-    font-size: 28px;
-    color: #ffdd00;
-    opacity: 0.95;
-    animation: popRobux 2.5s ease forwards;
-    pointer-events: none;
-    user-select: none;
-    z-index: 1001;
-  }
-  @keyframes popRobux {
-    0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-    100% { opacity: 0; transform: translateY(-130px) scale(1.7) rotate(720deg); }
-  }
-
-  /* Responsive */
-  @media (max-width: 450px) {
-    #container {
-      max-width: 90vw;
-      padding: 15px;
-    }
-    input[type=text], select, button {
-      font-size: 1.5rem;
-      padding: 12px 10px;
-      max-width: 100%;
-    }
-    #logo {
-      font-size: 60px;
-    }
-  }
-</style>
-</head>
-<body>
-
-<div id="container">
-  <div id="logo" title="Logo Robux Masterclass">💰</div>
-
-  <!-- Page 1: Saisie pseudo -->
-  <section class="page active" id="page1">
-    <h2>Bienvenue sur Robux Masterclass</h2>
-    <input id="username" type="text" placeholder="Tape ton pseudo (ex: Forward666)" autocomplete="off" spellcheck="false" />
-    <div id="errorMsg"></div>
-    <button id="btnNext1" onclick="validatePseudo()">Suivant</button>
-  </section>
-
-  <!-- Page 2: Recherche pseudo -->
-  <section class="page" id="page2">
-    <h2>Recherche du compte</h2>
-    <p id="searchText"></p>
-    <p class="dots"><span>.</span><span>.</span><span>.</span></p>
-  </section>
-
-  <!-- Page 3: Choix nombre Robux -->
-  <section class="page" id="page3">
-    <h2>Choisis ton nombre de Robux</h2>
-    <select id="robuxSelect">
-      <option value="100">100</option>
-      <option value="500">500</option>
-      <option value="1000">1000</option>
-      <option value="10000">10 000</option>
-    </select>
-    <button id="btnNext3" onclick="goToPage4()">Suivant</button>
-  </section>
-
-  <!-- Page 4: Vérification humain -->
-  <section class="page" id="page4">
-    <h2>Êtes-vous un humain ?</h2>
-    <button id="btnNext4" onclick="showResult()">Oui</button>
-  </section>
-
-  <!-- Page 5: Affichage résultat -->
-  <section class="page" id="page5">
-    <h2>Félicitations 🎉</h2>
-    <div id="robuxDisplay"></div>
-    <button id="btnNext5" onclick="goToWarning()">Suivant</button>
-  </section>
-
-  <!-- Page 6: Avertissement -->
 
