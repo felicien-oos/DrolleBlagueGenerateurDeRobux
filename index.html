@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Générateur de Robux Troll</title>
   <style>
     * {
@@ -11,18 +11,19 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #001f3f, #003366);
+      background: linear-gradient(to bottom right, #001f3f, #003366);
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       overflow: hidden;
-      animation: gradientAnimation 10s ease infinite alternate;
+      animation: pulseBody 4s infinite ease-in-out;
     }
-    @keyframes gradientAnimation {
-      from { background: linear-gradient(135deg, #001f3f, #003366); }
-      to   { background: linear-gradient(135deg, #002b5c, #001f3f); }
+    @keyframes pulseBody {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.98); }
+      100% { transform: scale(1); }
     }
     .container {
       width: 100%;
@@ -48,17 +49,17 @@
       to { opacity: 1; transform: scale(1); }
     }
     .input-large {
-      padding: 25px;
-      font-size: 1.5em;
+      padding: 20px;
+      font-size: 2em;
       width: 100%;
       border-radius: 10px;
       border: none;
       margin-top: 20px;
     }
     button {
-      margin-top: 20px;
+      margin-top: 30px;
       padding: 15px 40px;
-      font-size: 1.2em;
+      font-size: 1.5em;
       border: none;
       border-radius: 8px;
       background-color: #00aced;
@@ -84,20 +85,28 @@
       font-size: 1.2em;
       margin-top: 20px;
     }
-    .confetti {
-      animation: float 2s ease-in-out infinite alternate;
-    }
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-20px); opacity: 0.5; }
+    .confetti-container {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 2em;
     }
   </style>
 </head>
 <body>
+  <div class="confetti-container">
+    <div>🎉🎉</div>
+    <div>🎉🎉</div>
+  </div>
   <div class="container">
+    <div style="font-size: 4em; margin-bottom: 10px;">🤖</div>
     <div class="page active" id="page1">
       <h1>Générateur de Robux Troll 🤣</h1>
-      <input type="text" placeholder="Entre ton pseudo Roblox 😆" class="input-large" id="username" />
+      <input type="text" placeholder="😆 Mettez votre pseudo (ex: roi_des_robux)" class="input-large" id="username">
       <button onclick="nextPage(2)">Suivant</button>
     </div>
 
@@ -110,33 +119,28 @@
         <option>10000</option>
       </select>
       <button onclick="nextPage(3)">Suivant</button>
-      <button onclick="prevPage(1)">Retour</button>
     </div>
 
     <div class="page" id="page3">
       <h1>Vérification Humaine</h1>
-      <p>Êtes-vous vraiment un humain ?</p>
+      <p>Est-ce que vous êtes un humain ?</p>
       <button onclick="nextPage(4)">Oui</button>
-      <button onclick="prevPage(2)">Retour</button>
     </div>
 
     <div class="page" id="page4">
       <h1>Félicitations 🎉</h1>
       <div class="robux-number" id="robuxDisplay"></div>
-      <div class="confetti">💸💸💸</div>
-      <div class="warning">⚠️ Appuie sur "Suivant" pour finaliser la génération.</div>
+      <div class="warning">⚠️ Vous devez appuyer sur le bouton Suivant pour finaliser.</div>
       <button onclick="nextPage(5)">Suivant</button>
-      <button onclick="prevPage(3)">Retour</button>
     </div>
 
     <div class="page" id="page5">
-      <h1>⚠️ AVERTISSEMENT IMPORTANT ⚠️</h1>
-      <p>Ce site est une blague pour piéger vos amis 😄<br><br>
-      Ne croyez jamais aux générateurs de Robux.<br>
-      Ils sont soit des arnaques, soit des virus ⚠️<br><br>
-      Seul <strong>Microsoft Rewards</strong> propose des Robux gratuits légitimes.<br><br>
-      🚫 Faites attention à ce que vous voyez sur YouTube ou TikTok !</p>
-      <button onclick="prevPage(4)">Retour</button>
+      <h1>⚠️ AVERTISSEMENT ⚠️</h1>
+      <p>Ce site est juste pour rigoler avec vos amis.<br>
+      Ne croyez pas aux générateurs de Robux.<br>
+      Ce sont des arnaques ou des virus.<br>
+      Seul <strong>Microsoft Rewards</strong> peut donner des Robux gratuits.<br>
+      🚫 Ne faites pas confiance aux promesses sur YouTube.</p>
       <button onclick="restart()">🔁 Recommencer</button>
     </div>
 
@@ -163,16 +167,13 @@
       }, 2000);
     }
 
-    function prevPage(pageNumber) {
-      document.querySelector('.page.active').classList.remove('active');
-      document.getElementById(`page${pageNumber}`).classList.add('active');
-    }
-
     function restart() {
-      location.reload();
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page1').classList.add('active');
+      document.getElementById('username').value = '';
+      document.getElementById('robuxDisplay').textContent = '';
+      document.getElementById('robux').selectedIndex = 0;
     }
   </script>
 </body>
 </html>
-
-
